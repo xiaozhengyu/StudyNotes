@@ -1,0 +1,2390 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)https://www.cnblogs.com/jajian/p/9695055.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin">
+    <meta property="og:description" content="前言 随着springboot的流行，以前基于XML的spring配置用的越来越少，JavaConfig形式使用的越来越多，类似于: 可以看出更多的是基于注解(Annotation)实现的，包括spr">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Java自定义注解 - JaJian - 博客园</title>
+    
+    <link rel="stylesheet" href="./如何自定义注解_files/blog-common.min.css">
+    
+    <link type="text/css" rel="stylesheet" href="./如何自定义注解_files/custom.css">
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./如何自定义注解_files/bundle-SimpleMemory-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/jajian/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/jajian/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/jajian/wlwmanifest.xml">
+    <script src="./如何自定义注解_files/amp4ads-host-v0.js.下载"></script><script src="./如何自定义注解_files/pubads_impl_rendering_2019121002.js.下载"></script><script async="" src="./如何自定义注解_files/analytics.js.下载"></script><script src="./如何自定义注解_files/jquery-2.2.0.min.js.下载"></script>
+    <script src="./如何自定义注解_files/blog-common.min.js.下载"></script>
+    <script>
+        var currentBlogId = 354333;
+        var currentBlogApp = 'jajian';
+        var cb_enable_mathjax = true;
+        var isLogined = true;
+    </script>
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processClass: 'math', processEscapes: true },
+        TeX: {
+        equationNumbers: { autoNumber: ['AMS'], useLabelIds: true },
+        extensions: ['extpfeil.js', 'mediawiki-texvc.js'],
+        Macros: {bm: "\\boldsymbol"}
+        },
+        'HTML-CSS': { linebreaks: { automatic: true } },
+        SVG: { linebreaks: { automatic: true } }
+        });
+    </script>
+    <script src="./如何自定义注解_files/MathJax.js.下载"></script>
+    
+<link rel="preload" href="./如何自定义注解_files/f.txt" as="script"><script type="text/javascript" src="./如何自定义注解_files/f.txt"></script><script src="./如何自定义注解_files/pubads_impl_2019121002.js.下载" async=""></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><link rel="prefetch" href="https://tpc.googlesyndication.com/safeframe/1-0-37/html/container.html"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ToProgress" src="./如何自定义注解_files/ToProgress.min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="rotate" src="./如何自定义注解_files/jquery.rotate.min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="snapSvg" src="./如何自定义注解_files/snap.svg-min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tools" src="./如何自定义注解_files/tools1.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="css.min" src="./如何自定义注解_files/css.min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="classie" src="./如何自定义注解_files/classie.js.下载"></script><link type="text/css" rel="stylesheet" href="./如何自定义注解_files/optiscroll.css"><link type="text/css" rel="stylesheet" href="./如何自定义注解_files/menu_bubble.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="optiscroll" src="./如何自定义注解_files/jquery.optiscroll.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main4" src="./如何自定义注解_files/main4.js.下载"></script><link type="text/css" rel="stylesheet" href="./如何自定义注解_files/font_543384_hfku19m6z8ouhaor.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="base" src="./如何自定义注解_files/base.v2.2.js.下载"></script><link rel="shortcut icon" href="https://files.cnblogs.com/files/jajian/blog_logo.gif"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="RibbonsEffect" src="./如何自定义注解_files/RibbonsEffect.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="articleStatement" src="./如何自定义注解_files/articleStatement7.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="TweenMax" src="./如何自定义注解_files/TweenMax.min.js.下载"></script><link type="text/css" rel="stylesheet" href="./如何自定义注解_files/baguetteBox.min.css"><link type="text/css" rel="stylesheet" href="./如何自定义注解_files/gallery-clean.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="title" src="./如何自定义注解_files/articleTitle.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bootstrap" src="./如何自定义注解_files/bootstrap.min.js.下载"></script><link type="text/css" rel="stylesheet" href="./如何自定义注解_files/marvin.nav2.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="MyTween" src="./如何自定义注解_files/MyTween.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="baguetteBox" src="./如何自定义注解_files/baguetteBox.min.js.下载"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="marvin" src="./如何自定义注解_files/marvin.nav2.js.下载"></script></head>
+<body style="overflow: auto;"><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top"></a>
+    <div id="page_begin_html">
+        <!-- <script>
+window.tctipConfig = {
+staticPrefix: "http://static.tctip.com",
+cssPrefix: "http://static.tctip.com",
+buttonImageId: 5,
+buttonTip: "dashang",
+list:{
+alipay: {qrimg: "https://files.cnblogs.com/files/jajian/alipay1.bmp"},
+weixin:{qrimg: "https://files.cnblogs.com/files/jajian/wechat.bmp"},
+}
+};
+</script>
+<script src="https://files.cnblogs.com/files/jajian/tctip.min.js" defer></script>
+<link href="https://files.cnblogs.com/files/jajian/myRewards.v3.css" rel="stylesheet">
+ -->
+<!-- Loading 底层遮罩 -->
+<div id="loading" style="display: none;"></div>
+
+<!-- 悬浮窗口
+<div id="roll"></div>
+<script type="text/javascript">
+var ggRoll = {
+    roll : document.getElementById("roll"),
+    speed : 20,
+    statusX : 1,
+    statusY : 1,
+    x : 100,
+    y : 300,
+    winW : document.documentElement.clientWidth - document.getElementById("roll").offsetWidth,
+    winH : document.documentElement.clientHeight - document.getElementById("roll").offsetHeight,
+    Go : function(){
+        this.roll.style.left=this.x+'px';
+        this.roll.style.top=this.y+'px';
+         
+        this.x = this.x + (this.statusX? -1: 1)
+        if(this.x < 0) {this.statusX = 0}
+        if(this.x > this.winW) {this.statusX = 1}
+         
+        this.y = this.y + (this.statusY? -1: 1)
+        if(this.y < 0) {this.statusY = 0}
+        if(this.y > this.winH) {this.statusY = 1}
+    }
+}
+var interval = setInterval("ggRoll.Go()", ggRoll.speed);
+ggRoll.roll.onmouseover = function(){clearInterval(interval)};
+ggRoll.roll.onmouseout = function(){interval = setInterval("ggRoll.Go()", ggRoll.speed)};
+</script> -->
+    </div>
+    
+<!--done-->
+<div id="home" style="margin-top: 40vh;">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/jajian/"><img id="blogLogo" src="./如何自定义注解_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/jajian/">吴家健</a>
+</h1>
+<h2>
+
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/jajian/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/JaJian">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="https://www.cnblogs.com/jajian/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			
+			<span id="stats_post_count">随笔 - 
+64&nbsp; </span>
+<span id="stats_article_count">文章 - 
+6&nbsp; </span>
+<span id="stats-comment_count">评论 - 
+394</span>
+
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 post-del-title" href="https://www.cnblogs.com/jajian/p/9695055.html">Java自定义注解</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+    <span title-type="h1" class="header__span"><h1 id="autoid-0-0-0" class="header__dev"><b class="dev__fe"><i>1</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>0</i></b><b class="dev__developer"><span class="dev__title">前言</span></b></h1></span><br>
+<p>随着springboot的流行，以前基于XML的spring配置用的越来越少，JavaConfig形式使用的越来越多，类似于:</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AppConfig</span> </span>{    
+    <span class="hljs-meta">@Bean</span>(name=<span class="hljs-string">"helloBean"</span>)
+    <span class="hljs-function"><span class="hljs-keyword">public</span> HelloWorld <span class="hljs-title">helloWorld</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> HelloWorldImpl();
+    }   
+}</code></pre>
+<p>可以看出更多的是基于注解(Annotation)实现的，包括springboot的入口类**Application。</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-meta">@Configuration</span>
+<span class="hljs-meta">@ComponentScan</span>(<span class="hljs-string">"com.alibaba.trade"</span>)
+<span class="hljs-meta">@EnableAutoConfiguration</span><span class="hljs-comment">//(exclude = {PageHelperAutoConfiguration.class})</span>
+<span class="hljs-meta">@ServletComponentScan</span>
+<span class="hljs-meta">@EnableTransactionManagement</span>
+<span class="hljs-meta">@EnableDiscoveryClient</span>
+<span class="hljs-meta">@EnableWebMvc</span>
+<span class="hljs-meta">@MapperScan</span>(<span class="hljs-string">"com.alibaba.trade.shared.mapper"</span>)
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TradeApplication</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SpringBootServletInitializer</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        SpringApplication.run(TradeApplication.class, args);
+    }
+}</code></pre>
+<p>Java注解不仅让我们减少了项目中XML文件，方便了维护，同时也使我们代码更简洁。那么项目中我们如何阅读注解以及如何创造自己的注解呢？</p>
+<span title-type="h1" class="header__span"><h1 id="autoid-1-0-0" class="header__dev"><b class="dev__fe"><i>2</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>0</i></b><b class="dev__developer"><span class="dev__title">注解说明</span></b></h1></span><br>
+<p>Java注解又称Java标注，是Java语言5.0版本开始支持加入源代码的特殊语法元数据。为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据。<br>
+Java语言中的类、方法、变量、参数和包等都可以被标注。和Javadoc不同，Java标注可以通过反射获取注解内容。在编译器生成类文件时，注解可以被嵌入到字节码中。Java虚拟机可以保留注解内容，在运行时可以获取到注解内容。</p>
+<span title-type="h2" class="header__span"><h2 id="autoid-2-0-0" class="header__dev"><b class="dev__fe"><i>2</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>1</i></b><b class="dev__developer"><span class="dev__title">内置注解</span></b></h2></span><br>
+<p>Java 定义了一套注解，共有 7 个，3 个在 java.lang 中，剩下 4 个在 java.lang.annotation 中。<br>
+1、作用在代码的注解是</p>
+<ul>
+<li><code>@Override</code> - 检查该方法是否是重写方法。如果发现其父类，或者是引用的接口中并没有该方法时，会报编译错误。</li>
+<li><code>@Deprecated</code> - 标记过时方法。如果使用该方法，会报编译警告。</li>
+<li><code>@SuppressWarnings</code> - 指示编译器去忽略注解中声明的警告。</li>
+</ul>
+<p>2、作用在其他注解的注解(或者说<strong>元注解</strong>)是:</p>
+<ul>
+<li><code>@Retention</code> - 标识这个注解怎么保存，是只在代码中，还是编入class文件中，或者是在运行时可以通过反射访问。</li>
+<li><code>@Documented</code> - 标记这些注解是否包含在用户文档中。</li>
+<li><code>@Target</code> - 标记这个注解应该是哪种 Java 成员。</li>
+<li><code>@Inherited</code> - 标记这个注解是继承于哪个注解类(默认 注解并没有继承于任何子类)</li>
+</ul>
+<p>3、从 Java 7 开始，额外添加了 3 个注解:</p>
+<ul>
+<li><code>@SafeVarargs</code> - Java 7 开始支持，忽略任何使用参数为泛型变量的方法或构造函数调用产生的警告。</li>
+<li><code>@FunctionalInterface</code> - Java 8 开始支持，标识一个匿名函数或函数式接口。</li>
+<li><code>@Repeatable</code> - Java 8 开始支持，标识某注解可以在同一个声明上使用多次。</li>
+</ul>
+<span title-type="h2" class="header__span"><h2 id="autoid-2-1-0" class="header__dev"><b class="dev__fe"><i>2</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>2</i></b><b class="dev__developer"><span class="dev__title">元注解</span></b></h2></span><br>
+<p>1、<strong>@Retention</strong></p>
+<p><code>@Retention</code> annotation指定标记注释的存储方式：</p>
+<ul>
+<li>RetentionPolicy.SOURCE - 标记的注释仅保留在源级别中，并由编译器忽略。</li>
+<li>RetentionPolicy.CLASS - 标记的注释在编译时由编译器保留，但Java虚拟机（JVM）会忽略。</li>
+<li>RetentionPolicy.RUNTIME - 标记的注释由JVM保留，因此运行时环境可以使用它。</li>
+</ul>
+<p>2、<strong>@Documented</strong></p>
+<p><code>@Documented</code> 注释表明，无论何时使用指定的注释，都应使用Javadoc工具记录这些元素。（默认情况下，注释不包含在Javadoc中。）有关更多信息，请参阅 Javadoc工具页面。</p>
+<p>3、<strong>@Target</strong></p>
+<p><code>@Target</code> 注释标记另一个注释，以限制可以应用注释的Java元素类型。目标注释指定以下元素类型之一作为其值</p>
+<ul>
+<li>ElementType.TYPE 可以应用于类的任何元素。</li>
+<li>ElementType.FIELD 可以应用于字段或属性。</li>
+<li>ElementType.METHOD 可以应用于方法级注释。</li>
+<li>ElementType.PARAMETER 可以应用于方法的参数。</li>
+<li>ElementType.CONSTRUCTOR 可以应用于构造函数。</li>
+<li>ElementType.LOCAL_VARIABLE 可以应用于局部变量。</li>
+<li>ElementType.ANNOTATION_TYPE 可以应用于注释类型。</li>
+<li>ElementType.PACKAGE 可以应用于包声明。</li>
+<li>ElementType.TYPE_PARAMETER</li>
+<li>ElementType.TYPE_USE</li>
+</ul>
+<p>4、<strong>@Inherited</strong></p>
+<p><code>@Inherited</code> 注释表明注释类型可以从超类继承。当用户查询注释类型并且该类没有此类型的注释时，将查询类的超类以获取注释类型（默认情况下不是这样）。此注释仅适用于类声明。</p>
+<p>5、<strong>@Repeatable</strong></p>
+<p>Repeatable Java SE 8中引入的，<code>@Repeatable</code>注释表明标记的注释可以多次应用于相同的声明或类型使用(即可以重复在同一个类、方法、属性等上使用)。</p>
+<span title-type="h1" class="header__span"><h1 id="autoid-2-2-0" class="header__dev"><b class="dev__fe"><i>3</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>0</i></b><b class="dev__developer"><span class="dev__title">自定义注解</span></b></h1></span><br>
+<p>Java中自定义注解和创建一个接口相似，自定义注解的格式是以@interface为标志的。</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-meta">@Documented</span>
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="hljs-meta">@Target</span>({ElementType.TYPE})
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> SPI {
+    <span class="hljs-comment">/**
+     * default extension name
+     */</span>
+    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ""</span>;
+}</code></pre>
+<p>我们知道java.lang.annotation包中有一个Annotation的接口，它是所有注解类型扩展的公共接口。那我们是否可以直接通过实现该接口来实现自定义注解呢？</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-keyword">import</span> java.lang.annotation.Annotation;
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAnnotation</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Annotation</span> </span>{
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> Class&lt;? extends Annotation&gt; annotationType() {
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;
+    }
+}</code></pre>
+<p>发现Annotation接口中只有一个annotationType的方法，而且通过源码的注释我们可以发现答案是不能。<br>
+<a class="lightbox" href="./如何自定义注解_files/1162587-20180924111548367-445385279.png"><img src="./如何自定义注解_files/1162587-20180924111548367-445385279.png"></a><br>
+汉译即为：Annotaion被所有注解类型继承，但是要注意：手动扩展继承此接口的接口不会定义注解类型。另请注意，此接口本身不定义注解类型。</p>
+<span title-type="h1" class="header__span"><h1 id="autoid-3-0-0" class="header__dev"><b class="dev__fe"><i>4</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>0</i></b><b class="dev__developer"><span class="dev__title">使用场景</span></b></h1></span><br>
+<p>自定义注解的使用场景很多，我们在造轮子写框架的过程经常会使用到，例如我最近就遇到了一个业务场景：像一些编辑业务信息的接口，产品要求信息编辑后的新旧值对比，对比的业务功能，我们的实现方式是拿到前端填写的Form表单(新值)和数据库中查询出来的Dto(旧值)通过反射技术获取到相同属性字段名，再比较属性值就可以得出新旧值。得到值之后我们也知道该字段的Dto中的字段名，但是如何将比较得到的新旧值字段的中文名返回给前端呢？例如：</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Stedent</span> </span>{
+        <span class="hljs-keyword">private</span> String name;
+        <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
+        <span class="hljs-keyword">private</span> String sex;
+       <span class="hljs-comment">//省略setter,getter</span>
+    }</code></pre>
+<p>比较后我们的结果是 name : "xiaoming "-&gt; "daming"，age : 24 -&gt; 26。但是我们不能直接将name和age返回给前端，他们需要的格式是：姓名: "xiaoming "-&gt; "daming"，年龄 : 24 -&gt; 26。这时候就可以考虑自定义一个注解<code>@FieldName</code>,</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-meta">@Deprecated</span>
+<span class="hljs-meta">@Documented</span>
+<span class="hljs-meta">@Retention</span>(RetentionPolicy.RUNTIME)
+<span class="hljs-meta">@Target</span>(ElementType.FIELD)
+<span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> FieldName {
+    <span class="hljs-function">String <span class="hljs-title">value</span><span class="hljs-params">()</span> <span class="hljs-keyword">default</span> ""</span>;
+}</code></pre>
+<p>然后将该注解加在属性字段上面</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> </span>{
+
+    <span class="hljs-meta">@FieldName</span>(value = <span class="hljs-string">"姓名"</span>)
+    <span class="hljs-keyword">private</span> String name;
+
+    <span class="hljs-meta">@FieldName</span>(value = <span class="hljs-string">"年龄"</span>)
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;
+
+    <span class="hljs-meta">@FieldName</span>(value = <span class="hljs-string">"性别"</span>)
+    <span class="hljs-keyword">private</span> String sex;
+
+    <span class="hljs-comment">//省略setter,getter</span>
+}</code></pre>
+<p>之后就可以通过反射获取该字段中文名</p>
+<pre class="java" style="border-width: 1px 1px 1px 2px; border-style: dashed dashed dashed solid; border-color: rgb(170, 170, 170) rgb(170, 170, 170) rgb(170, 170, 170) rgb(108, 226, 108); border-image: initial;"><code class="hljs"><span class="hljs-comment">// 如果 oldField 属性值与 newField 属性值的内容不相同</span>
+<span class="hljs-keyword">if</span> (!isEmpty(newValue)) {
+    Map&lt;String, Object&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();
+    String newFieldName = newField.getName();
+    
+    <span class="hljs-comment">//在这里获取注解的信息</span>
+    <span class="hljs-keyword">if</span> (newField.isAnnotationPresent(FieldName.class)) {
+        FieldName fieldNameAnno = newField.getAnnotation(FieldName.class);
+        newFieldName = fieldNameAnno.name();
+    }
+        map.put(FIELD_NAME, newFieldName);
+        map.put(OLD_VALUE, oldValue);
+        map.put(NEW_VALUE, newValue);
+        list.add(map);
+}</code></pre>
+
+<br><p style="font-weight:  bold;font-size: 16px;text-align:  center;color: #ddd;">__EOF__</p><p style="padding-top: 10px;padding-right: 10px;padding-bottom: 10px;padding-left: 200px;background: url(https://www.cnblogs.com/images/cnblogs_com/jajian/1073550/o_wxgzh.jpg) #f7f7f7 no-repeat 1px 50%;font-family: 微软雅黑;font-size: 13px;border: #e0e0e0 1px dashed;"><span style="font-weight: bold; white-space:nowrap;">作　　者</span>：<strong><span style="font-size: 16px; color: red;"><a href="https://www.cnblogs.com/jajian" target="_blank">JaJian`博кē</a></span></strong><br><span style="font-weight: bold; white-space:nowrap;">出　　处</span>：<a href="https://www.cnblogs.com/jajian/p/9695055.html" target="_blank">https://www.cnblogs.com/jajian/p/9695055.html</a><br><span style="font-weight: bold; white-space:nowrap;">关于博主</span>：沪漂一员，互联网架构方向，如有问题探讨可以<a href="http://msg.cnblogs.com/msg/send/jajian" target="_blank">直接私信</a>我，亦可下方留言。<br><span style="font-weight: bold; white-space:nowrap;">版权声明</span>：本博客的所有原创文章均会同步更新到我的公众号<strong>【小菜亦牛】</strong>上，喜欢的可以左边扫码关注。码字辛苦，尊重原创。<br><span style="font-weight: bold; white-space:nowrap;">声援博主</span>：如果您觉得文章对您有帮助，可以点击文章右下角<strong><span style="color: #ff0000; font-size: 12pt;">【<a id="post-up" onclick="votePost(9695055,&#39;Digg&#39;)" href="javascript:void(0);">推荐</a>】</span></strong>一下。您的鼓励是博主的最大动力！<br></p></div>
+<div id="MySignature" style="display: block;"><div id="MySignature" style="text-align: center; background: #dcedb8; display: block">
+关注微信公众号【小菜亦牛】，回复“Go入门指南”即可得经典教程。点滴积累，厚积薄发，小菜鸟也能成为大牛。
+</div></div>
+<div class="clear"></div>
+<div id="blog_post_info_block"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/jajian/category/1280013.html" target="_blank">[01].Java基础</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/jajian/tag/Java%E5%9F%BA%E7%A1%80/">Java基础</a>,             <a href="https://www.cnblogs.com/jajian/tag/%E5%8E%9F%E5%88%9B/">原创</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(9695055,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;19ca8942-6234-e711-9fc1-ac853d9f53cc&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./如何自定义注解_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./如何自定义注解_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/jajian/" target="_blank"><img src="./如何自定义注解_files/20190919085853.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/jajian/">JaJian</a><br>
+            <a href="https://home.cnblogs.com/u/jajian/followees/">关注 - 1</a><br>
+            <a href="https://home.cnblogs.com/u/jajian/followers/">粉丝 - 1177</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;19ca8942-6234-e711-9fc1-ac853d9f53cc&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg" style="display: none;"> <div id="suspension" style="padding-bottom: 5px"><a style="float:right" href="javascript:void(0);" onclick="hideSuspension()">点击隐藏</a><img style="width:120px;height:120px" src="./如何自定义注解_files/o_wx.jpg"><br><span>欢迎加入作者的公众号：<b>【小菜亦牛】</b>。</span><br><span>定期分享作者的技术经验和开发心得等。</span></div><div style="padding-bottom: 5px"><span class="icon_favorite" style="padding-top: 2px"></span><a onclick="follow(&#39;4e9743d1-e082-e111-aa3f-842b2b196315&#39;);" href="javascript:void(0);" style="font-weight: bold; padding-left:5px;">关注一下博主吧</a> </div>
+    <div class="diggit" onclick="votePost(9695055,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">10</span>
+    </div>
+    <div class="buryit" onclick="votePost(9695055,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">2</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/jajian/p/9410844.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/jajian/p/9410844.html" title="发布于 2018-08-04 02:32">IntelliJ IDEA（十一） ：Debug的使用</a>
+    <br>
+    <a href="https://www.cnblogs.com/jajian/p/9729939.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/jajian/p/9729939.html" title="发布于 2018-09-30 15:42">通俗易懂系列 | 设计模式（一）：模板模式</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date">2018-09-24 11:16</span>&nbsp;
+<a href="https://www.cnblogs.com/jajian/">JaJian</a>&nbsp;
+阅读(<span id="post_view_count">14189</span>)&nbsp;
+评论(<span id="post_comment_count">11</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=9695055" rel="nofollow">
+    编辑
+</a>
+<a href="javascript:void(0)" onclick="AddToWz(9695055);return false;">收藏</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script src="./如何自定义注解_files/highlight.min.js.下载"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 354333, cb_blogApp = 'jajian', cb_blogUserGuid = '19ca8942-6234-e711-9fc1-ac853d9f53cc';
+    var cb_entryId = 9695055, cb_entryCreatedDate = '2018-09-24 11:16', cb_postType = 1; 
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder">
+
+<div id="comment_pager_top">
+    
+</div>
+
+<br>
+<div class="feedback_area_title">评论列表</div>
+<div class="feedbackNoItems"><div class="feedbackNoItems"></div></div>	
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4075001, &#39;Jf2ZhQ5hPQPfVQujSTl+VRY20Evbfe7WcPS+ojD/nid57EDpyWqzGg==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4075001, &#39;Jf2ZhQ5hPQPfVQujSTl+VRY20Evbfe7WcPS+ojD/nid57EDpyWqzGg==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4075001" class="layer">#1楼</a>
+<a name="4075001" id="comment_anchor_4075001"></a>
+
+ 
+<span class="comment_date">2018-09-24 16:14</span>
+
+ 
+
+            <a id="a_comment_author_4075001" href="https://www.cnblogs.com/zhenghengbin/" target="_blank">Kevin_zheng</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20191210192921.png"><div id="comment_body_4075001" class="blog_comment_body hvr-bob">
+    博主也换这个主题了。就是刚刚打开的比较慢
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4075001, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4075001, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4075001_avatar" style="display:none">
+            https://pic.cnblogs.com/face/891580/20191210192921.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4075146, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4075146, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4075146" class="layer">#2楼</a>
+<a name="4075146" id="comment_anchor_4075146"></a>
+[<span class="louzhu">楼主</span>]
+ 
+<span class="comment_date">2018-09-24 22:43</span>
+
+ 
+
+            <a id="a_comment_author_4075146" href="https://www.cnblogs.com/jajian/" target="_blank">JaJian</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20190919085853.png"><div id="comment_body_4075146" class="blog_comment_body hvr-bob">
+    <a href="https://www.cnblogs.com/jajian/p/9695055.html#4075001" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4075001);">@</a>
+养码青年<br>今天才换的，发现是很慢
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4075146, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4075146, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4075146_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1162587/20190919085853.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4075414, &#39;dHgW1YOIrvo0oC3VMmJ7njvrlXV0AxOw8Y1ELF3c4vmpPe7WDW6GFg==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4075414, &#39;dHgW1YOIrvo0oC3VMmJ7njvrlXV0AxOw8Y1ELF3c4vmpPe7WDW6GFg==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4075414" class="layer">#3楼</a>
+<a name="4075414" id="comment_anchor_4075414"></a>
+
+ 
+<span class="comment_date">2018-09-25 11:26</span>
+
+ 
+
+            <a id="a_comment_author_4075414" href="https://www.cnblogs.com/angusbao/" target="_blank">流年煮雪</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20170906140857.png"><div id="comment_body_4075414" class="blog_comment_body hvr-bob">
+    很炫啊，能套用就好了
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4075414, &#39;Digg&#39;, this.parentElement, false);">
+                支持(2)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4075414, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4075414_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1233594/20170906140857.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4085694, &#39;yoyMBPfWd7YGpdY3lf0JcilvDA7p2q8JGLDNUcjKCF0UPuEN+EADbQ==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4085694, &#39;yoyMBPfWd7YGpdY3lf0JcilvDA7p2q8JGLDNUcjKCF0UPuEN+EADbQ==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4085694" class="layer">#4楼</a>
+<a name="4085694" id="comment_anchor_4085694"></a>
+
+ 
+<span class="comment_date">2018-10-10 16:07</span>
+
+ 
+
+            <a id="a_comment_author_4085694" href="https://home.cnblogs.com/u/1506378/" target="_blank">woody1988</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/no_avatar.gif"><div id="comment_body_4085694" class="blog_comment_body hvr-bob">
+    @Override - 检查该方法是否是重载方法。如果发现其父类，或者是引用的接口中并没有该方法时，会报编译错误。<br><br>Override   重写
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4085694, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4085694, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4087047, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4087047, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4087047" class="layer">#5楼</a>
+<a name="4087047" id="comment_anchor_4087047"></a>
+[<span class="louzhu">楼主</span>]
+ 
+<span class="comment_date">2018-10-11 21:54</span>
+
+ 
+
+            <a id="a_comment_author_4087047" href="https://www.cnblogs.com/jajian/" target="_blank">JaJian</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20190919085853.png"><div id="comment_body_4087047" class="blog_comment_body hvr-bob">
+    <a href="https://www.cnblogs.com/jajian/p/9695055.html#4085694" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4085694);">@</a>
+woody1988<br>仔细，谢谢纠正。
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4087047, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4087047, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4087047_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1162587/20190919085853.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4408594, &#39;Lp8+2vdZmbk6p+fvGbj+gTdn7UKqgod406o/C7wU8eus63pDbvFLeA==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4408594, &#39;Lp8+2vdZmbk6p+fvGbj+gTdn7UKqgod406o/C7wU8eus63pDbvFLeA==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4408594" class="layer">#6楼</a>
+<a name="4408594" id="comment_anchor_4408594"></a>
+
+ 
+<span class="comment_date">2019-10-30 00:38</span>
+
+ 
+
+            <a id="a_comment_author_4408594" href="https://home.cnblogs.com/u/1368803/" target="_blank">忆峰的海角</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/no_avatar.gif"><div id="comment_body_4408594" class="blog_comment_body hvr-bob">
+    你好 博主  因为刚刚接触 还是不太清楚代码放在哪里  方便把源码发到我的邮箱里面吗？这是我的邮箱 599671886@qq.com
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4408594, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4408594, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4408642, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4408642, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4408642" class="layer">#7楼</a>
+<a name="4408642" id="comment_anchor_4408642"></a>
+[<span class="louzhu">楼主</span>]
+ 
+<span class="comment_date">2019-10-30 09:03</span>
+
+ 
+
+            <a id="a_comment_author_4408642" href="https://www.cnblogs.com/jajian/" target="_blank">JaJian</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20190919085853.png"><div id="comment_body_4408642" class="blog_comment_body hvr-bob">
+    <a href="https://www.cnblogs.com/jajian/p/9695055.html#4408594" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4408594);">@</a>
+忆峰的海角<br>你好，需要的是什么源码？这篇博文的？
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4408642, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4408642, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4408642_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1162587/20190919085853.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4408788, &#39;Lp8+2vdZmbk6p+fvGbj+gTdn7UKqgod406o/C7wU8eus63pDbvFLeA==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4408788, &#39;Lp8+2vdZmbk6p+fvGbj+gTdn7UKqgod406o/C7wU8eus63pDbvFLeA==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4408788" class="layer">#8楼</a>
+<a name="4408788" id="comment_anchor_4408788"></a>
+
+ 
+<span class="comment_date">2019-10-30 10:11</span>
+
+ 
+
+            <a id="a_comment_author_4408788" href="https://home.cnblogs.com/u/1368803/" target="_blank">忆峰的海角</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/no_avatar.gif"><div id="comment_body_4408788" class="blog_comment_body hvr-bob">
+    <a href="https://www.cnblogs.com/jajian/p/9695055.html#4408642" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4408642);">@</a>
+JaJian<br>嗯嗯 是 这篇文章的
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4408788, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4408788, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4408951, &#39;Lp8+2vdZmbk6p+fvGbj+gTdn7UKqgod406o/C7wU8eus63pDbvFLeA==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4408951, &#39;Lp8+2vdZmbk6p+fvGbj+gTdn7UKqgod406o/C7wU8eus63pDbvFLeA==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4408951" class="layer">#9楼</a>
+<a name="4408951" id="comment_anchor_4408951"></a>
+
+ 
+<span class="comment_date">2019-10-30 11:11</span>
+
+ 
+
+            <a id="a_comment_author_4408951" href="https://home.cnblogs.com/u/1368803/" target="_blank">忆峰的海角</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/no_avatar.gif"><div id="comment_body_4408951" class="blog_comment_body hvr-bob">
+    <a href="https://www.cnblogs.com/jajian/p/9695055.html#4408642" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4408642);">@</a>
+JaJian<br>博主 你好  这篇文章的demo 方便发一下吗 非常感谢
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4408951, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4408951, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4409248, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4409248, &#39;0+Mc69Av+PowK+2Po1v4BeVZx9cBHMwRpwhM3QQMwiDZoTnl2UEWEw==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4409248" class="layer">#10楼</a>
+<a name="4409248" id="comment_anchor_4409248"></a>
+[<span class="louzhu">楼主</span>]
+ 
+<span class="comment_date">2019-10-30 15:54</span>
+
+ 
+
+            <a id="a_comment_author_4409248" href="https://www.cnblogs.com/jajian/" target="_blank">JaJian</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20190919085853.png"><div id="comment_body_4409248" class="blog_comment_body hvr-bob">
+    <a href="https://www.cnblogs.com/jajian/p/9695055.html#4408951" title="查看所回复的评论" onclick="commentManager.renderComments(0,50,4408951);">@</a>
+忆峰的海角<br>这个没有demo，只是一片理论说明的博文。
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4409248, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4409248, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4409248_avatar" style="display:none">
+            https://pic.cnblogs.com/face/1162587/20190919085853.png
+        </span>
+
+			</div>
+		</div>
+		<div class="feedbackItem">
+			<div class="feedbackListSubtitle">
+				<div class="feedbackManage">
+					&nbsp;&nbsp;
+
+<span class="comment_actions">
+    <a href="javascript:void(0);" onclick="return ReplyComment(4468982, &#39;2QaFAn/qt8ULJ4NGYNl9ertW1KeYJ/6yd94FM/g7858w2HDkIUOYXQ==&#39;)">
+        回复
+    </a>
+    <a href="javascript:void(0);" onclick="return QuoteComment(4468982, &#39;2QaFAn/qt8ULJ4NGYNl9ertW1KeYJ/6yd94FM/g7858w2HDkIUOYXQ==&#39;)">
+        引用
+    </a>
+    
+    
+</span>
+
+
+				</div>
+				
+<a href="https://www.cnblogs.com/jajian/p/9695055.html#4468982" class="layer">#11楼</a>
+<a name="4468982" id="comment_anchor_4468982"></a>
+
+        <span id="comment-maxId" style="display:none">4468982</span>
+        <span id="comment-maxDate" style="display:none">2019/12/25 下午6:44:21</span>
+ 
+<span class="comment_date">2019-12-25 18:44</span>
+
+ 
+
+            <a id="a_comment_author_4468982" href="https://www.cnblogs.com/shuaishuai1993/" target="_blank">帅少1993</a>
+
+			</div>
+			<div class="feedbackCon">
+				
+<img class="comment-avatar" src="./如何自定义注解_files/20150514111046.png"><div id="comment_body_4468982" class="blog_comment_body hvr-bob">
+    楼主这是哪个主题？皮肤没看到这个
+</div>
+        <div class="comment_vote">
+            <span class="comment_error" style="color: red"></span>
+            <a href="javascript:void(0);" class="comment_digg" onclick="return voteComment(4468982, &#39;Digg&#39;, this.parentElement, false);">
+                支持(0)
+            </a>
+            <a href="javascript:void(0);" class="comment_burry" onclick="return voteComment(4468982, &#39;Bury&#39;, this.parentElement, false);">
+                反对(0)
+            </a>
+        </div>
+        <span id="comment_4468982_avatar" style="display:none">
+            https://pic.cnblogs.com/face/735751/20150514111046.png
+        </span>
+
+			</div>
+		</div>
+
+<div id="comment_pager_bottom">
+    
+</div>
+
+
+</div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/jajian/p/9695055.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/jajian/p/9695055.html#top">返回顶部</a></div>
+    <div id="comment_form_container"><script type="text/javascript" src="./如何自定义注解_files/mention.js.下载"></script>
+<div id="commentform_title">发表评论</div>
+<span id="tip_comment" style="color:Red"></span>
+<p>
+    昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50" value="啃白菜的喵">
+</p>
+<div class="commentbox_main">
+    <div class="commentbox_title">
+        <div class="commentbox_title_left">评论内容：</div>
+        <div class="commentbox_title_right">
+            <img id="ubb_quote" class="comment_icon" src="./如何自定义注解_files/quote.gif" alt="引用" title="添加引用" onclick="insertUBB(&#39;tbCommentBody&#39;,&#39;quote&#39;)">
+            <img id="ubb_bold" class="comment_icon" src="./如何自定义注解_files/b.png" alt="粗体" title="添加粗体" onclick="insertUBB(&#39;tbCommentBody&#39;,&#39;b&#39;)">
+            <img id="ubb_url" class="comment_icon" src="./如何自定义注解_files/lk.png" alt="链接" title="添加链接" onclick="insertUbbUrl(&#39;tbCommentBody&#39;)">
+            <img id="ubb_indent" class="comment_icon" src="./如何自定义注解_files/indent.png" alt="缩进" title="添加首行缩进" onclick="insertIndent(&#39;tbCommentBody&#39;)">
+            <img id="ubb_code" class="comment_icon" src="./如何自定义注解_files/InsertCode.gif" alt="代码" title="添加代码" onclick="insertUbbCode()">
+            <img id="ubb_img" class="comment_icon" src="./如何自定义注解_files/img.gif" alt="图片" title="上传图片" onclick="OpenImageUploadWindow();">
+        </div>
+    </div>
+    <div style="display:none">
+        <span id="comment_edit_id"></span><span id="span_parentcomment_id"></span>
+        <span id="span_parent_id"></span>
+        <span id="span_comment_replyto"></span>
+        <span id="span_comment_posted"></span>
+    </div>
+    <textarea id="tbCommentBody" class="comment_textarea"></textarea>
+</div>
+<p id="commentbox_opt">
+    <input id="btn_comment_submit" type="button" class="comment_btn" value="提交评论">
+    <span id="span_comment_canceledit" style="display:none"><a href="javascript:void(0);" onclick="return CancelCommentEdit()">不改了</a></span>
+    <a href="javascript:void(0);" onclick="return logout();">退出</a>
+            <a id="commentbox_opt_sub" href="javascript:void(0);" title="订阅后有新评论时会邮件通知您" onclick="commentManager.Subscribe()">订阅评论</a>
+</p>
+<div id="tip_comment2" style="color:Red"></div>
+<p>[Ctrl+Enter快捷键提交]</p>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-工控&#39;)">【推荐】超50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="https://cloud.tencent.com/act/seckill?fromSource=gwzcw.3168381.3168381.3168381&amp;utm_medium=cpc&amp;utm_id=gwzcw.3168381.3168381.3168381" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-腾讯云&#39;)">【推荐】腾讯云热门云产品限时秒杀，爆款1核2G云服务器99元/年！</a><br><a href="http://click.aliyun.com/m/1000081987/" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-阿里云&#39;)">【推荐】阿里云双11返场来袭，热门产品低至一折等你来抢！</a><br><a href="https://cloud.baidu.com/campaign/Promotion-20191111/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-19shuangshiyiganenji-BCC-cpaxingshi-191210|pu:cpa-xingshi|ci:2019syj|kw:2172212" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-百度云&#39;)">【推荐】百度智能云岁末感恩季，明星产品低至1元新老用户畅享</a><br><a href="https://www.jdcloud.com/cn/activity/year-end?utm_source=DMT_cnblogs&amp;utm_medium=CH&amp;utm_campaign=q4vm&amp;utm_term=Virtual-Machines" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-京东云&#39;)">【活动】京东云服务器_云主机低于1折，低价高性能产品备战双11</a><br><a href="https://www.huodongxing.com/event/1521928757400" target="_blank" onclick="ga(&#39;send&#39;, &#39;event&#39;, &#39;Link&#39;, &#39;click&#39;, &#39;T2-七牛云&#39;)">【活动】ECUG For Future 技术者的年度盛会（杭州，1月4-5日）</a><br></div>
+    <div id="opt_under_post"></div>
+    <script async="async" src="./如何自定义注解_files/gpt.js.下载"></script>
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+    <script>
+        googletag.cmd.push(function () {
+            googletag.defineSlot("/1090369/C1", [300, 250], "div-gpt-ad-1546353474406-0").addService(googletag.pubads());
+            googletag.defineSlot("/1090369/C2", [468, 60], "div-gpt-ad-1539008685004-0").addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    <div id="cnblogs_c1" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1546353474406-0" style="height:250px; width:300px;" data-google-query-id="CIS3gtr60OYCFQSclgodMFMPYg"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C1_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" data-google-container-id="1" style="border: 0px; vertical-align: bottom;" data-load-complete="true" src="./如何自定义注解_files/saved_resource.html"></iframe></div></div>
+    </div>
+    <div id="under_post_news"></div>
+    <div id="cnblogs_c2" class="c_ad_block" style="">
+        <div id="div-gpt-ad-1539008685004-0" style="height:60px; width:468px;" data-google-query-id="CIW3gtr60OYCFQSclgodMFMPYg">
+            
+        <div id="google_ads_iframe_/1090369/C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/C2_0" title="3rd party ad content" name="google_ads_iframe_/1090369/C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" data-google-container-id="2" style="border: 0px; vertical-align: bottom;" data-load-complete="true" src="./如何自定义注解_files/saved_resource(1).html"></iframe></div></div>
+    </div>
+    <div id="under_post_kb"></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+        deliverAdT2();
+        deliverAdC1();
+        deliverAdC2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem"><!--done-->
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news">
+    <!-- menu html -->
+<div class="container">
+    <div class="menu-wrap optiscroll is-enabled" id="menuWrap" style="display:none"><div class="optiscroll-content" style="right: -14px; bottom: -14px;">
+        <nav class="menu">
+
+            <!-- 个人简介 -->
+            <div class="introduce-box">
+                <div class="introduce-head">
+                    <div class="introduce-via" id="menuBlogAvatar"><img src="./如何自定义注解_files/20190919085853(1).png"></div>
+                </div>
+                <div id="introduce">
+        昵称：
+        <a href="https://home.cnblogs.com/u/jajian/">
+            JaJian
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/jajian/" title="入园时间：2017-05-09">
+            2年7个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/jajian/followers/">
+            1177
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/jajian/followees/">
+            1
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;19ca8942-6234-e711-9fc1-ac853d9f53cc&#39;)">+加关注</a></div>
+        
+    </div>
+            </div>
+
+            <!-- 导航 -->
+            <div class="nav-title"></div>
+            <div class="icon-list">
+                <ul>
+                    <li><a href="https://www.cnblogs.com/JaJian/" target="_self">首页</a></li>       
+                    <li><a href="https://msg.cnblogs.com/send/JaJian" target="_blank">联系</a></li>
+                    <li><a href="https://i.cnblogs.com/EditPosts.aspx?opt=1" target="_blank">新随笔</a></li>
+                    <li><a href="https://i.cnblogs.com/" target="_blank">管理</a></li>
+                    <!-- <li><a href="https://www.cnblogs.com/" target=_blank">博客园</a></li> -->		
+                    <li><a href="https://github.com/noobgod" target="_blank">GitHub</a></li>
+                    <li><a href="https://www.cnblogs.com/JaJian/tag" target="_blank">我的标签</a></li>
+                </ul>
+            </div>
+
+            <!-- 随笔分类 -->
+            <div class="classify-title"></div>
+            <div class="m-icon-list" id="sb-classify">
+            <h3 class="catListTitle">
+                
+
+随笔分类
+<span style="font-size:11px;font-weight:normal">(64)</span>
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1284378.html" rel="" target="">
+    [00].总目录(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280013.html" rel="" target="">
+    [01].Java基础(10)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1284349.html" rel="" target="">
+    [02].并发编程(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1379212.html" rel="" target="">
+    [03].Spring(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1330972.html" rel="" target="">
+    [04].Spring Boot
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1330971.html" rel="" target="">
+    [05].Spring Cloud(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280015.html" rel="" target="">
+    [06].搜索引擎(10)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1381510.html" rel="" target="">
+    [07].消息中间件(4)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1381513.html" rel="" target="">
+    [08].Redis
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280011.html" rel="" target="">
+    [09].IntelliJ IDEA(13)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1348898.html" rel="" target="">
+    [10].分布式架构(6)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280018.html" rel="" target="">
+    [11].性能优化(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280021.html" rel="" target="">
+    [12].设计模式(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280025.html" rel="" target="">
+    [13].随笔小文(7)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+			
+	    <!-- 积分排名 -->
+            <div class="scorerank-title"></div>
+            <div class="m-icon-list" id="sb-scorerank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	
+129050
+	</li>
+	<li class="liRank">
+		排名 -	
+4227
+	</li>
+</ul>
+</div>
+
+	    <!-- 我的标签 -->
+            <!-- <div class="topTag-title"></div> -->
+            <!-- <div class="m-icon-list" id="sb-topTag"></div> -->
+			
+            <!-- 随笔档案 -->
+            <!-- <div class="record-title"></div> -->
+            <!-- <div class="m-icon-list" id="sb-record"></div> -->
+
+			<!-- 推荐排行 -->
+            <div class="topDiggPosts-title"></div>
+            <div class="m-icon-list" id="sb-topDiggPosts"><div><ul><li><a href="https://www.cnblogs.com/jajian/p/9853592.html">程序员啊，他又加班了(83)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9763946.html">美化你的博客 | 来看这篇教程(73)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10014145.html">终于有人把“TCC分布式事务”实现原理讲明白了！(54)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10325884.html">程序员为什么会有职业瓶颈？(52)</a></li><li><a href="https://www.cnblogs.com/jajian/p/7989032.html">IntelliJ IDEA（一） ：安装与破解(40)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9801154.html">全文搜索引擎 ElasticSearch 还是 Solr？(28)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9973555.html">拜托！面试请不要再问我Spring Cloud底层原理(27)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8080612.html">IntelliJ IDEA（四） ：Settings（上）(20)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11101213.html">分布式全局ID生成方案(20)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10466082.html">记一次在闲鱼上购买 MacBook Pro 的经历(19)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10680563.html">作为程序员你是如何学习的？(19)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8081658.html">IntelliJ IDEA（九） ：酷炫插件系列(17)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11001084.html">一款简单的程序员博客园皮肤(16)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9976900.html">Elasticsearch 技术分析（一）： 基础入门(14)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8012603.html">IntelliJ IDEA（三） ：常用快捷键(13)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8081640.html">IntelliJ IDEA（七） ：Project Structure(11)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9695055.html">Java自定义注解(10)</a></li><li><a href="https://www.cnblogs.com/jajian/p/7994126.html">IntelliJ IDEA（二） ：面板介绍(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9410844.html">IntelliJ IDEA（十一） ：Debug的使用(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10017577.html">IntelliJ IDEA 2018.3 重大升级，哪些功能打动了你？(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11223992.html">Elasticsearch 技术分析（九）：全文搜索引擎Elasticsearch，这篇文章给讲透了！(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11101196.html">从单体架构升级到微服务，在代码层面应注意的一些问题(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11091519.html">我是技术总监，你干嘛总问我技术细节？(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10053504.html">Elasticsearch 技术分析（五）：如何通过SQL查询Elasticsearch(7)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9861527.html">程序员你为什么这么累 | 编码规范(6)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10465519.html">Elasticsearch 技术分析（七）： Elasticsearch 的性能优化(6)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11002521.html">通过IDEA快速定位和排除依赖冲突(5)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10385063.html">Java 7 和 Java 8 中的 HashMap原理解析(5)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9729939.html">通俗易懂系列 | 设计模式（一）：模板模式(5)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9743922.html">通俗易懂系列 | 设计模式（六）：责任链模式(4)</a></li></ul></div></div>
+			
+            <!-- 阅读排行 -->
+            <div class="topview-title"></div>
+            <div class="m-icon-list" id="sb-topview"><div><ul><li><a href="https://www.cnblogs.com/jajian/p/7989032.html">IntelliJ IDEA（一） ：安装与破解(139567)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8081658.html">IntelliJ IDEA（九） ：酷炫插件系列(45842)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10014145.html">终于有人把“TCC分布式事务”实现原理讲明白了！(43199)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10466082.html">记一次在闲鱼上购买 MacBook Pro 的经历(18696)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8080612.html">IntelliJ IDEA（四） ：Settings（上）(17844)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10051901.html">全解史上最快的JOSN解析库 - alibaba Fastjson(17746)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9410844.html">IntelliJ IDEA（十一） ：Debug的使用(16667)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9801154.html">全文搜索引擎 ElasticSearch 还是 Solr？(16334)</a></li><li><a href="https://www.cnblogs.com/jajian/p/7994126.html">IntelliJ IDEA（二） ：面板介绍(16019)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8012603.html">IntelliJ IDEA（三） ：常用快捷键(14382)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9695055.html">Java自定义注解(14186)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10017577.html">IntelliJ IDEA 2018.3 重大升级，哪些功能打动了你？(12276)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8136672.html">IntelliJ IDEA（六） ：Settings（下）(11775)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8081640.html">IntelliJ IDEA（七） ：Project Structure(11491)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10053504.html">Elasticsearch 技术分析（五）：如何通过SQL查询Elasticsearch(11098)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8108690.html">IntelliJ IDEA（五） ：Settings（中）(10973)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9853592.html">程序员啊，他又加班了(8816)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9973555.html">拜托！面试请不要再问我Spring Cloud底层原理(8122)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8471989.html">IntelliJ IDEA（八） ：git的使用(7734)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9056730.html">IntelliJ IDEA（十） ：常用操作(7288)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10325884.html">程序员为什么会有职业瓶颈？(6752)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9976900.html">Elasticsearch 技术分析（一）： 基础入门(5761)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9763946.html">美化你的博客 | 来看这篇教程(4225)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10680563.html">作为程序员你是如何学习的？(3830)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11002521.html">通过IDEA快速定位和排除依赖冲突(3723)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10465519.html">Elasticsearch 技术分析（七）： Elasticsearch 的性能优化(3158)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10176707.html">Elasticsearch 技术分析（六）： 自动发现机制 - Zen Discoveryedit(3058)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10152681.html">Elasticsearch 技术分析（三）： 索引别名Aliases问题(2747)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10257555.html">互联网面试必杀：如何保证消息中间件全链路数据100%不丢失：第一篇(2479)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11101213.html">分布式全局ID生成方案(2422)</a></li></ul></div></div>
+			
+			<!-- 评论排行 -->
+            <div class="topFeedbackPosts-title"></div>
+            <div class="m-icon-list" id="sb-topFeedbackPosts"><div><ul><li><a href="https://www.cnblogs.com/jajian/p/10466082.html">记一次在闲鱼上购买 MacBook Pro 的经历(55)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9853592.html">程序员啊，他又加班了(52)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10325884.html">程序员为什么会有职业瓶颈？(37)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10680563.html">作为程序员你是如何学习的？(21)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9763946.html">美化你的博客 | 来看这篇教程(20)</a></li><li><a href="https://www.cnblogs.com/jajian/p/7989032.html">IntelliJ IDEA（一） ：安装与破解(16)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10014145.html">终于有人把“TCC分布式事务”实现原理讲明白了！(16)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8081658.html">IntelliJ IDEA（九） ：酷炫插件系列(14)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9695055.html">Java自定义注解(11)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9801154.html">全文搜索引擎 ElasticSearch 还是 Solr？(10)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10053504.html">Elasticsearch 技术分析（五）：如何通过SQL查询Elasticsearch(9)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11101213.html">分布式全局ID生成方案(9)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10926681.html">分布式系统中接口的幂等性(9)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11001084.html">一款简单的程序员博客园皮肤(9)</a></li><li><a href="https://www.cnblogs.com/jajian/p/11223992.html">Elasticsearch 技术分析（九）：全文搜索引擎Elasticsearch，这篇文章给讲透了！(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/9976900.html">Elasticsearch 技术分析（一）： 基础入门(8)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8136672.html">IntelliJ IDEA（六） ：Settings（下）(7)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8012603.html">IntelliJ IDEA（三） ：常用快捷键(7)</a></li><li><a href="https://www.cnblogs.com/jajian/p/8080612.html">IntelliJ IDEA（四） ：Settings（上）(6)</a></li><li><a href="https://www.cnblogs.com/jajian/p/10306629.html">“三次握手，四次挥手”你真的懂吗？(6)</a></li></ul></div></div>
+
+        </nav>
+        <button class="close-button" id="close-button">Close Menu</button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"></path>
+            <desc>Created with Snap</desc><defs></defs></svg>
+        </div>
+    </div><div class="optiscroll-v"><b class="optiscroll-vtrack"></b></div><div class="optiscroll-h"><b class="optiscroll-htrack"></b></div></div>
+    <button class="menu-button menu-button-scroll" id="open-button"></button>
+    <div class="content-wrap" id="content-wrap"></div><!-- /content-wrap -->
+</div>
+<!-- menu html end -->
+
+<!-- banner html -->
+<div class="main-header" style="height: 40vh; background: url(&quot;http://images.cnblogs.com/cnblogs_com/jajian/1073550/o_brown_wood.jpg&quot;) center center / cover no-repeat rgb(34, 34, 34);">
+    <div class="vertical" style="display: none;">
+        <div class="main-header-content inner">
+            <h1 class="page-title cssf79d1841e1b313" id="homeTopTitle">JaJian`博кē</h1>
+            <h2 class="page-description" id="hitokoto"></h2>
+            <h3 class="page-author" id="hitokotoAuthor"></h3>
+        </div>
+    </div>
+    <a class="scroll-down" href="javascript:void(0);" data-offset="-45" style="display: none;">
+        <span class="hidden">Scroll Down</span>
+        <i class="scroll-down-icon iconfont icon-fanhui"></i>
+    </a>
+    <canvas id="myTopCanvas" style=" position: absolute;margin: auto;width: 100%;height: 100%;top: 0;bottom: 0;left: 0;right: 0;" width="1010" height="172"></canvas>
+</div>
+<!-- banner html end -->
+
+<!-- global var -->
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['3']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['1']();</script>
+<!-- global var end -->
+
+<!--
+<span id="amazingStat">
+<img border="0" title='访问量' src="https://cc.amazingcounters.com/counter.php?i=3227590&c=9683083" alt="AmazingCounters.com" style="opacity: 0.5; margin-left: 7px;cursor: pointer; width: 60px;">
+</span> -->
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/jajian/">
+            JaJian
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/jajian/" title="入园时间：2017-05-09">
+            2年7个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/jajian/followers/">
+            1177
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/jajian/followees/">
+            1
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow(&#39;19ca8942-6234-e711-9fc1-ac853d9f53cc&#39;)">+加关注</a></div>
+        <script type="text/javascript">window['__document_write_ajax_callbacks__']['4']();</script><script>window['__document_write_ajax_callbacks__']['2']();</script>
+    </div>
+</div>
+
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn">
+<!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    
+</div>
+
+<!-- 常用链接 -->
+
+
+<!-- 最新随笔 -->
+<div id="sidebar_recentposts" class="sidebar-block">
+    <div class="catListEssay">
+<h3 class="catListTitle">最新随笔</h3>
+<ul>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11833179.html">1.那些Java架构师必知必会的技术</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11306471.html">2.对Java中HashCode方法的深入思考</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11223992.html">3.Elasticsearch 技术分析（九）：全文搜索引擎Elasticsearch，这篇文章给讲透了！</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11101213.html">4.分布式全局ID生成方案</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11101196.html">5.从单体架构升级到微服务，在代码层面应注意的一些问题</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11091519.html">6.我是技术总监，你干嘛总问我技术细节？</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11002521.html">7.通过IDEA快速定位和排除依赖冲突</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/11001084.html">8.一款简单的程序员博客园皮肤</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/10962989.html">9.分布式系统中session一致性问题</a>
+
+                </li>
+                <li>
+                    
+
+<a href="https://www.cnblogs.com/jajian/p/10926681.html">10.分布式系统中接口的幂等性</a>
+
+                </li>
+			
+
+</ul>
+</div>
+
+
+</div>
+
+
+<!-- 我的标签 -->
+
+
+<!-- 积分与排名 -->
+<div id="sidebar_scorerank" class="sidebar-block">
+    <div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	
+129050
+	</li>
+	<li class="liRank">
+		排名 -	
+4227
+	</li>
+</ul>
+</div>
+
+
+
+
+</div>
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+    
+        <div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+            <h3 class="catListTitle">
+                
+
+随笔分类
+<span style="font-size:11px;font-weight:normal">(64)</span>
+
+
+            </h3>
+
+
+            <ul>
+
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1284378.html" rel="" target="">
+    [00].总目录(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280013.html" rel="" target="">
+    [01].Java基础(10)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1284349.html" rel="" target="">
+    [02].并发编程(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1379212.html" rel="" target="">
+    [03].Spring(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1330972.html" rel="" target="">
+    [04].Spring Boot
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1330971.html" rel="" target="">
+    [05].Spring Cloud(1)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280015.html" rel="" target="">
+    [06].搜索引擎(10)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1381510.html" rel="" target="">
+    [07].消息中间件(4)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1381513.html" rel="" target="">
+    [08].Redis
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280011.html" rel="" target="">
+    [09].IntelliJ IDEA(13)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1348898.html" rel="" target="">
+    [10].分布式架构(6)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280018.html" rel="" target="">
+    [11].性能优化(2)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280021.html" rel="" target="">
+    [12].设计模式(8)
+</a>
+ 
+
+                        </li>
+                        <li>
+                            
+<a href="https://www.cnblogs.com/jajian/category/1280025.html" rel="" target="">
+    [13].随笔小文(7)
+</a>
+ 
+
+                        </li>
+
+            </ul>
+
+
+        </div>
+
+</div>
+
+<!-- 最新评论 -->
+<div id="sidebar_recentcomments" class="sidebar-block">
+    <div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div class="RecentCommentBlock">
+        <ul>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/jajian/p/9695055.html#4468982">1. Re:Java自定义注解</a></li>
+                    <li class="recent_comment_body">楼主这是哪个主题？皮肤没看到这个</li>
+                    <li class="recent_comment_author">--帅少1993</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/jajian/p/11001084.html#4468735">2. Re:一款简单的程序员博客园皮肤</a></li>
+                    <li class="recent_comment_body">能请教一个问题不,切换当前浏览器的Tab到另一个Tab的时候,本网页的title,会变成"Hi,JaJian",鼠标点击本网页的tab的时候,title有变回来"一款简单的程序猿博客园皮肤..."....</li>
+                    <li class="recent_comment_author">--逆风的悦</li>
+                    <li class="recent_comment_title"><a href="https://www.cnblogs.com/jajian/p/10926681.html#4464676">3. Re:分布式系统中接口的幂等性</a></li>
+                    <li class="recent_comment_body">@ 魔沦殇那应该怎么处理？...</li>
+                    <li class="recent_comment_author">--Seven_noon</li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block">
+    <div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/7989032.html">
+                            1. IntelliJ IDEA（一） ：安装与破解(139567)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8081658.html">
+                            2. IntelliJ IDEA（九） ：酷炫插件系列(45842)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10014145.html">
+                            3. 终于有人把“TCC分布式事务”实现原理讲明白了！(43199)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10466082.html">
+                            4. 记一次在闲鱼上购买 MacBook Pro 的经历(18696)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8080612.html">
+                            5. IntelliJ IDEA（四） ：Settings（上）(17844)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10051901.html">
+                            6. 全解史上最快的JOSN解析库 - alibaba Fastjson(17746)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9410844.html">
+                            7. IntelliJ IDEA（十一） ：Debug的使用(16667)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9801154.html">
+                            8. 全文搜索引擎 ElasticSearch 还是 Solr？(16334)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/7994126.html">
+                            9. IntelliJ IDEA（二） ：面板介绍(16019)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8012603.html">
+                            10. IntelliJ IDEA（三） ：常用快捷键(14382)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9695055.html">
+                            11. Java自定义注解(14186)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10017577.html">
+                            12. IntelliJ IDEA 2018.3 重大升级，哪些功能打动了你？(12276)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8136672.html">
+                            13. IntelliJ IDEA（六） ：Settings（下）(11775)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8081640.html">
+                            14. IntelliJ IDEA（七） ：Project Structure(11491)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10053504.html">
+                            15. Elasticsearch 技术分析（五）：如何通过SQL查询Elasticsearch(11098)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8108690.html">
+                            16. IntelliJ IDEA（五） ：Settings（中）(10973)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9853592.html">
+                            17. 程序员啊，他又加班了(8816)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9973555.html">
+                            18. 拜托！面试请不要再问我Spring Cloud底层原理(8122)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8471989.html">
+                            19. IntelliJ IDEA（八） ：git的使用(7734)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9056730.html">
+                            20. IntelliJ IDEA（十） ：常用操作(7288)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10325884.html">
+                            21. 程序员为什么会有职业瓶颈？(6752)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9976900.html">
+                            22. Elasticsearch 技术分析（一）： 基础入门(5761)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9763946.html">
+                            23. 美化你的博客 | 来看这篇教程(4225)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10680563.html">
+                            24. 作为程序员你是如何学习的？(3830)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/11002521.html">
+                            25. 通过IDEA快速定位和排除依赖冲突(3723)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10465519.html">
+                            26. Elasticsearch 技术分析（七）： Elasticsearch 的性能优化(3158)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10176707.html">
+                            27. Elasticsearch 技术分析（六）： 自动发现机制 - Zen Discoveryedit(3058)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10152681.html">
+                            28. Elasticsearch 技术分析（三）： 索引别名Aliases问题(2747)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10257555.html">
+                            29. 互联网面试必杀：如何保证消息中间件全链路数据100%不丢失：第一篇(2479)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/11101213.html">
+                            30. 分布式全局ID生成方案(2422)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block">
+    <div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10466082.html">
+                            1. 记一次在闲鱼上购买 MacBook Pro 的经历(55)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9853592.html">
+                            2. 程序员啊，他又加班了(52)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10325884.html">
+                            3. 程序员为什么会有职业瓶颈？(37)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10680563.html">
+                            4. 作为程序员你是如何学习的？(21)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9763946.html">
+                            5. 美化你的博客 | 来看这篇教程(20)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/7989032.html">
+                            6. IntelliJ IDEA（一） ：安装与破解(16)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10014145.html">
+                            7. 终于有人把“TCC分布式事务”实现原理讲明白了！(16)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8081658.html">
+                            8. IntelliJ IDEA（九） ：酷炫插件系列(14)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9695055.html">
+                            9. Java自定义注解(11)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9801154.html">
+                            10. 全文搜索引擎 ElasticSearch 还是 Solr？(10)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10053504.html">
+                            11. Elasticsearch 技术分析（五）：如何通过SQL查询Elasticsearch(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/11101213.html">
+                            12. 分布式全局ID生成方案(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10926681.html">
+                            13. 分布式系统中接口的幂等性(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/11001084.html">
+                            14. 一款简单的程序员博客园皮肤(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/11223992.html">
+                            15. Elasticsearch 技术分析（九）：全文搜索引擎Elasticsearch，这篇文章给讲透了！(8)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/9976900.html">
+                            16. Elasticsearch 技术分析（一）： 基础入门(8)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8136672.html">
+                            17. IntelliJ IDEA（六） ：Settings（下）(7)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8012603.html">
+                            18. IntelliJ IDEA（三） ：常用快捷键(7)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/8080612.html">
+                            19. IntelliJ IDEA（四） ：Settings（上）(6)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jajian/p/10306629.html">
+                            20. “三次握手，四次挥手”你真的懂吗？(6)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+
+</div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+    
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9853592.html">
+                                1. 程序员啊，他又加班了(83)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9763946.html">
+                                2. 美化你的博客 | 来看这篇教程(73)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10014145.html">
+                                3. 终于有人把“TCC分布式事务”实现原理讲明白了！(54)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10325884.html">
+                                4. 程序员为什么会有职业瓶颈？(52)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/7989032.html">
+                                5. IntelliJ IDEA（一） ：安装与破解(40)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9801154.html">
+                                6. 全文搜索引擎 ElasticSearch 还是 Solr？(28)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9973555.html">
+                                7. 拜托！面试请不要再问我Spring Cloud底层原理(27)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/8080612.html">
+                                8. IntelliJ IDEA（四） ：Settings（上）(20)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/11101213.html">
+                                9. 分布式全局ID生成方案(20)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10466082.html">
+                                10. 记一次在闲鱼上购买 MacBook Pro 的经历(19)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10680563.html">
+                                11. 作为程序员你是如何学习的？(19)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/8081658.html">
+                                12. IntelliJ IDEA（九） ：酷炫插件系列(17)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/11001084.html">
+                                13. 一款简单的程序员博客园皮肤(16)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9976900.html">
+                                14. Elasticsearch 技术分析（一）： 基础入门(14)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/8012603.html">
+                                15. IntelliJ IDEA（三） ：常用快捷键(13)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/8081640.html">
+                                16. IntelliJ IDEA（七） ：Project Structure(11)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9695055.html">
+                                17. Java自定义注解(10)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/7994126.html">
+                                18. IntelliJ IDEA（二） ：面板介绍(8)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9410844.html">
+                                19. IntelliJ IDEA（十一） ：Debug的使用(8)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10017577.html">
+                                20. IntelliJ IDEA 2018.3 重大升级，哪些功能打动了你？(8)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/11223992.html">
+                                21. Elasticsearch 技术分析（九）：全文搜索引擎Elasticsearch，这篇文章给讲透了！(8)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/11101196.html">
+                                22. 从单体架构升级到微服务，在代码层面应注意的一些问题(8)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/11091519.html">
+                                23. 我是技术总监，你干嘛总问我技术细节？(8)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10053504.html">
+                                24. Elasticsearch 技术分析（五）：如何通过SQL查询Elasticsearch(7)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9861527.html">
+                                25. 程序员你为什么这么累 | 编码规范(6)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10465519.html">
+                                26. Elasticsearch 技术分析（七）： Elasticsearch 的性能优化(6)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/11002521.html">
+                                27. 通过IDEA快速定位和排除依赖冲突(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/10385063.html">
+                                28. Java 7 和 Java 8 中的 HashMap原理解析(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9729939.html">
+                                29. 通俗易懂系列 | 设计模式（一）：模板模式(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jajian/p/9743922.html">
+                                30. 通俗易懂系列 | 设计模式（六）：责任链模式(4)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer"><div class="footer-image"></div>
+		<!--done-->
+Copyright © 2019 JaJian
+<br><span id="poweredby">Powered by .NET Core 3.1.0 on Linux</span>
+
+
+
+	<i class="iconfont icon-odps-data cnzz" style="position: relative;top: 2px;left: 3px;cursor: pointer;"></i><span id="amazingStatSpan"></span><div>【事实并非理所当然<span id="footerTextIcon">❤️</span>世界总是欲盖弥彰】</div><div><span id="blogRunTimeSpan">This blog has running : 960 d 14 h 1 m 17 s</span><span class="my-face">ღゝ◡╹)ノ♡</span></div><div id="blogrollInfo">友情链接：<a href="https://www.cnblogs.com/loveincode/" target="_blank">loveincode</a><span style="margin: 0 3px;">/</span><a href="https://zyl.me/blog" target="_blank">ZYL的博客</a><span style="margin: 0 3px;">/</span><a href="https://msg.cnblogs.com/send/JaJian" target="_blank">申请坑位</a></div><div id="cnzzInfo"></div></div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    <div id="page_end_html">
+        <!-- 滚动进度 -->
+<div id="bottomProgressBar"><div id="top-progress-bar" style="position: relative; top: 0px; left: 0px; right: 0px; background-color: rgb(119, 182, 255); height: 2px; width: 47%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s; opacity: 1;"></div></div>
+
+<!-- 右下角菜单 -->
+<div id="rightMenu"><div id="rightDiggit" clickflg="false" onclick="votePost(9695055,&#39;Digg&#39;)"><span class="rightMenuSpan rightDiggitSpan">10</span><i class="iconfont icon-zan1"></i></div><div id="rightBuryit" clickflg="false" onclick="votePost(9695055,&#39;Bury&#39;)"><span class="rightMenuSpan rightBuryitSpan">2</span><i class="iconfont icon-buzan"></i></div><div id="attention" onclick="follow(&#39;19ca8942-6234-e711-9fc1-ac853d9f53cc&#39;)" clickflg="false"><span class="rightMenuSpan attentionSpan">关注</span><i class="iconfont icon-dianzan"></i></div><div id="toUpDown" data="up"><span class="rightMenuSpan toUpDownSpan">返回顶部</span><div id="toUpDownI" style="transform: rotate(0deg); transform-origin: 50% 50%;"><i class="iconfont icon-zhiding"></i></div></div></div>
+
+<!-- auto -->
+<!-- <script src="https://files.cnblogs.com/files/jajian/attention.js" defer></script> -->
+
+<!-- 
+<div id ="cnzzProtocol" style="display: none;">
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='id_cnzz_stat_icon'  id='cnzz_stat_icon_1275602529'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/z_stat.php%3Fid%3D1275602529%26online%3D1%26show%3Dline' type='text/javascript'%3E%3C/script%3E"));</script>
+</div> -->
+
+<script type="text/javascript" language="javascript"> 
+//为右下角推荐推荐区域添加关注按钮
+window.onload = function () {
+    $('#div_digg').prepend(' <div id="suspension" style="padding-bottom: 5px"><a style="float:right" href="javascript:void(0);" onclick="hideSuspension()">点击隐藏</a><img style="width:120px;height:120px"  src="https://images.cnblogs.com/cnblogs_com/jajian/1073550/o_wx.jpg" /><br/><span>欢迎加入作者的公众号：<b>【小菜亦牛】</b>。</span><br/><span>定期分享作者的技术经验和开发心得等。</span></div><div style="padding-bottom: 5px"><span class="icon_favorite" style="padding-top: 2px"></span><a onclick="follow(\'4e9743d1-e082-e111-aa3f-842b2b196315\');" href="javascript:void(0);" style="font-weight: bold; padding-left:5px;">关注一下博主吧</a> </div>');
+}
+
+function hideSuspension(){
+    document.getElementById('div_digg').style.display='none';
+}
+</script>
+    </div>
+
+<script type="text/javascript">
+
+    window.cnblogsConfig = {
+
+        // ---- 基础信息配置 ----
+        blogUser      : "JaJian`博кē", // 博主名称
+        //blogUser      : "小菜亦牛`博кē", // 博主名称
+        blogAvatar    : "https://pic.cnblogs.com/avatar/1162587/20190919085853.png", // 用户头像URL
+        blogStartDate : "2017-05-09", // 入园时间，年-月-日，入园时间查看方法：鼠标停留园龄时间上，会显示入园时间
+
+        // ---- 网站配置 ----
+        webpageTitleOnblur        : "(◍´꒳`◍) Hi, JaJian", // 当前页失去焦点，页面title显示文字
+        webpageTitleOnblurTimeOut : 500, // 当前页失去焦点，页面title变化，延时时间，单位毫秒
+        webpageTitleFocus         : "(*´∇｀*) 欢迎回来！", // 当前页获取焦点，页面title显示文字，显示后延时恢复原title
+        webpageTitleFocusTimeOut  : 1000, // 当前页获取焦点，页面title变化，延时时间，单位毫秒
+        webpageIcon : "https://files.cnblogs.com/files/jajian/blog_logo.gif", // 网站图标
+
+        // ---- 进度条配置 ----
+        progressBar: {
+            id      : 'top-progress-bar',
+            color   : '#77b6ff',
+            height  : '2px',
+            duration: 0.2
+        },
+
+        // ---- Loading配置 ----
+        loading: {
+            rebound: {
+                tension: 16,
+                friction: 5
+            },
+            spinner: {
+                id: 'spinner',
+                radius: 90,
+                sides: 3,
+                depth: 4,
+                colors: {
+                    background: '#f0f0f0',
+                    stroke: '#272633',
+                    base: null,
+                    child: '#272633'
+                },
+                alwaysForward: true, // When false the spring will reverse normally.
+                restAt: 0.5,         // A number from 0.1 to 0.9 || null for full rotation
+                renderBase: false
+            }
+        },
+
+        // ---- 主页配置 ----
+        homeTopImg    : "//images.cnblogs.com/cnblogs_com/jajian/1073550/o_312be0e5cae93d373d362d589f434215.jpg", // 主页图片Url，推荐尺寸>= 1920*1080
+        homeBannerText: "", // 主页头图上的标语，设置此选项会固定显示文字，默认为空，每日自动获取一句。
+        homeTopAnimation: { // 主页头图动画设置
+            radius: 15,
+            density: 0.2,
+            color: 'rgba(255,255,255, .2)', // 颜色设置，“random” 为随机颜色
+            clearOffset: 0.3
+        },
+
+        // ---- 随笔页配置 ----
+        essayTopImg: "http://images.cnblogs.com/cnblogs_com/jajian/1073550/o_brown_wood.jpg", // 随笔页图片Url
+        essayTopAnimationColors: [ // 随笔页图片动效颜色
+            '#96EDA6', '#5BC6A9',
+            '#38668C', '#374D84',
+            '#BED5CB', '#62ADC6',
+            '#8EE5DE', '#304E7B'
+        ],
+        essaySuffix:{ // 随笔后缀处配置
+            aboutHtml    : '沪漂一员，互联网架构方向，如有问题探讨可以<a href="http://msg.cnblogs.com/msg/send/jajian" target="_blank">直接私信</a>我，亦可下方留言。', // 关于博主，不配置使用默认
+            copyrightHtml: "本博客的所有原创文章均会同步更新到我的公众号<strong>【小菜亦牛】</strong>上，喜欢的可以左边扫码关注。码字辛苦，尊重原创。", // 版权声明，不配置使用默认
+            supportHtml  : ""  // 声援博主，不配置使用默认
+        },
+
+        // ---- 页脚配置 ----
+        bottomBlogroll: [ // 友情链接，[[链接名,链接]....]
+            ["loveincode",'https://www.cnblogs.com/loveincode/'],
+            ["ZYL的博客",'https://zyl.me/blog'],
+            ["申请坑位", 'https://msg.cnblogs.com/send/JaJian'],
+        ],
+        bottomText: {  // 页脚标语
+            left : "事实并非理所当然", // 图标左侧文字
+            right: "世界总是欲盖弥彰"  // 图标右侧文字
+        }
+
+    };
+
+    /**
+     * 资源文件配置
+     * source:"github" versions 处为GitHub提交版本哈希值 根据版本加载代码 https://github.com/BNDong/Cnblogs-Theme-SimpleMemory/commits/master
+     * source:"cnblogs" 从博客园文件加载代码，可以不配置版本号，本人博客园文件不会更新了（操作实在太麻烦了），如有需求可以从github上挡下来最新代码，保存到自己的博客园文件中进行加载
+     */
+    var staticFileSetting = {
+        source   : 'cnblogs',
+        versions : 'b715cfe15b6d3b4c0243423f87b4e51fd803bd87', // 版本号
+    };
+
+    // start cache
+    $.ajaxSetup({cache: true});
+
+    // load loadingJs
+    $.getScript(getJsDelivrUrl('loading.js'), function () {
+
+        // Loading start
+        demo.initRebound();
+        demo.initSpinner();
+        demo.spinner.init(demo.spring, true);
+
+        $.getScript(getJsDelivrUrl('require.min.js'), function () {
+
+            $.getScript(getJsDelivrUrl('config.v2.2.js'), function () {
+
+                var staticResource = [
+                    'optiscroll',
+                    'ToProgress',
+                    'rotate',
+                    'snapSvg',
+                    'classie',
+                    'main4',
+                    'tools',
+                ];
+                require(staticResource, function() {
+
+                    require(['base'], function() {
+
+                        var base = new Base;
+                        base.init();
+                    });
+                });
+
+            });
+
+        });
+    });
+
+    /**
+     * 文件地址
+     * @param file
+     * @param directory 文件目录名称
+     * @returns {string}
+     */
+    function getJsDelivrUrl(file, directory) {
+        file = setFileNameMin(file, directory);
+
+        switch (staticFileSetting.source) {
+
+            case 'github': // 注意：此处为GitHub加载源，如果需要加载自己分支的代码，修改此处URL，URL规则详见：https://www.jsdelivr.com/
+                return 'https://cdn.jsdelivr.net/gh/noobgod/Cnblogs-Theme-SimpleMemory@'+staticFileSetting.versions+'/' + (file ? file : '');
+                break;
+
+            case 'cnblogs': // 注意：此处为博客园加载源，加载本人博客文件为老版本。本人博客园文件停止更新，如果需要可以修改至自己博客园文件
+                return 'https://blog-static.cnblogs.com/files/noobgod/'+file;
+                break;
+
+            default:
+                return '';break;
+        }
+    }
+
+    /**
+     * 文件名
+     * @param file
+     * @param directory 文件目录名称
+     * @returns {*}
+     */
+    function setFileNameMin(file, directory) {
+        if (typeof file == 'undefined') return '';
+
+        var suffix  = null;
+        var fileArr = file.split('.');
+
+        if (fileArr.length > 0 && $.inArray(fileArr[(fileArr.length -1)], ['js', 'css']) != -1) {
+            suffix    = fileArr.pop();
+            directory = suffix;
+        }
+
+        switch (staticFileSetting.source) {
+
+            case 'github':
+
+                if (typeof file !== 'undefined' && file.search('.min') == -1) fileArr.push('min');
+
+                if (suffix != null) fileArr.push(suffix);
+
+                return (typeof directory !== 'undefined' ? (directory + '/' + fileArr.join('.')) : (fileArr.join('.')));
+                break;
+
+            case 'cnblogs':
+                if (suffix != null) fileArr.push(suffix);
+                return fileArr.join('.');
+                break;
+
+            default:
+                return file;break;
+        }
+    }
+</script><script type="text/javascript">getFollowStatus('19ca8942-6234-e711-9fc1-ac853d9f53cc');</script><canvas width="1024" height="430" style="display: block; position: fixed; margin: 0px; padding: 0px; border: 0px; outline: 0px; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1;"></canvas><div id="toTop" style="zoom:0;"></div><div id="sideToolbar" style="top: 208px; visibility: hidden; display: block;" class="sideToolbarFix"><div class="sideCatalogBg" id="sideCatalog" style="right: 0px;"><div id="sideCatalog-sidebar"><div class="sideCatalog-sidebar-top"></div><div class="sideCatalog-sidebar-bottom"></div></div><div id="sideCatalog-catalog"><ul class="nav" style="width:230px;zoom:1"><li class=""><a href="https://www.cnblogs.com/jajian/p/9695055.html#autoid-0-0-0" title="1|0前言">1.0&nbsp;&nbsp;前言</a><span class="sideCatalog-dot"></span></li><li class=""><a href="https://www.cnblogs.com/jajian/p/9695055.html#autoid-1-0-0" title="2|0注解说明">2.0&nbsp;&nbsp;注解说明</a><span class="sideCatalog-dot"></span></li><li class="h2Offset"><a href="https://www.cnblogs.com/jajian/p/9695055.html#autoid-2-0-0" title="2|1内置注解">2.1&nbsp;&nbsp;内置注解</a></li><li class="h2Offset"><a href="https://www.cnblogs.com/jajian/p/9695055.html#autoid-2-1-0" title="2|2元注解">2.2&nbsp;&nbsp;元注解</a></li><li class="active"><a href="https://www.cnblogs.com/jajian/p/9695055.html#autoid-2-2-0" title="3|0自定义注解">3.0&nbsp;&nbsp;自定义注解</a><span class="sideCatalog-dot"></span></li><li><a href="https://www.cnblogs.com/jajian/p/9695055.html#autoid-3-0-0" title="4|0使用场景">4.0&nbsp;&nbsp;使用场景</a><span class="sideCatalog-dot"></span></li></ul></div></div><a href="javascript:void(0);" id="sideCatalogBtn" class="sideCatalogBtnDisable"></a></div><div role="dialog" id="baguetteBox-overlay"><div id="baguetteBox-slider"></div><button type="button" id="previous-button" aria-label="Previous" class="baguetteBox-button"><svg width="44" height="60"><polyline points="30 10 10 30 30 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="next-button" aria-label="Next" class="baguetteBox-button"><svg width="44" height="60"><polyline points="14 10 34 30 14 50" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="butt" fill="none" stroke-linejoin="round"></polyline></svg></button><button type="button" id="close-button" aria-label="Close" class="baguetteBox-button"><svg width="30" height="30"><g stroke="rgb(160,160,160)" stroke-width="4"><line x1="5" y1="5" x2="25" y2="25"></line><line x1="5" y1="25" x2="25" y2="5"></line></g></svg></button></div><st-div id="__selection-translator__"> <st-div class="__st-box__" style="display: none; position: fixed; z-index: 99999; left: 0px; top: 0px; transform: translateX(643px) translateY(260px);"> <st-header> <st-span class="st-icon-pin" title="固定"></st-span> <st-span class="st-icon-down-open" title="展开"></st-span> <st-span class="st-icon-cog" title="设置"></st-span> </st-header> <st-div class="__query-form__" style="display: none;"> <st-div> <textarea placeholder="输入要翻译的句子或单词"></textarea> </st-div> <st-div> <select> <option value="">自动判断</option> <option value="zh">中文</option><option value="zh-CN">中文(简体)</option><option value="zh-HK">中文(香港)</option><option value="zh-TW">中文(繁体)</option><option value="en">英语</option><option value="ja">日语</option><option value="ko">朝鲜语</option><option value="de">德语</option><option value="fr">法语</option><option value="ru">俄语</option><option value="th">泰语</option><option value="af">南非语</option><option value="ar">阿拉伯语</option><option value="az">阿塞拜疆语</option><option value="be">比利时语</option><option value="bg">保加利亚语</option><option value="ca">加泰隆语</option><option value="cs">捷克语</option><option value="cy">威尔士语</option><option value="da">丹麦语</option><option value="dv">第维埃语</option><option value="el">希腊语</option><option value="eo">世界语</option><option value="es">西班牙语</option><option value="et">爱沙尼亚语</option><option value="eu">巴士克语</option><option value="fa">法斯语</option><option value="fi">芬兰语</option><option value="fo">法罗语</option><option value="gl">加里西亚语</option><option value="gu">古吉拉特语</option><option value="he">希伯来语</option><option value="hi">印地语</option><option value="hr">克罗地亚语</option><option value="hu">匈牙利语</option><option value="hy">亚美尼亚语</option><option value="id">印度尼西亚语</option><option value="is">冰岛语</option><option value="it">意大利语</option><option value="ka">格鲁吉亚语</option><option value="kk">哈萨克语</option><option value="kn">卡纳拉语</option><option value="kok">孔卡尼语</option><option value="ky">吉尔吉斯语</option><option value="lt">立陶宛语</option><option value="lv">拉脱维亚语</option><option value="mi">毛利语</option><option value="mk">马其顿语</option><option value="mn">蒙古语</option><option value="mr">马拉地语</option><option value="ms">马来语</option><option value="mt">马耳他语</option><option value="nb">挪威语(伯克梅尔)</option><option value="nl">荷兰语</option><option value="ns">北梭托语</option><option value="pa">旁遮普语</option><option value="pl">波兰语</option><option value="pt">葡萄牙语</option><option value="qu">克丘亚语</option><option value="ro">罗马尼亚语</option><option value="sa">梵文</option><option value="se">北萨摩斯语</option><option value="sk">斯洛伐克语</option><option value="sl">斯洛文尼亚语</option><option value="sq">阿尔巴尼亚语</option><option value="sv">瑞典语</option><option value="sw">斯瓦希里语</option><option value="syr">叙利亚语</option><option value="ta">泰米尔语</option><option value="te">泰卢固语</option><option value="tl">塔加路语</option><option value="tn">茨瓦纳语</option><option value="tr">土耳其语</option><option value="ts">宗加语</option><option value="tt">鞑靼语</option><option value="uk">乌克兰语</option><option value="ur">乌都语</option><option value="uz">乌兹别克语</option><option value="vi">越南语</option><option value="xh">班图语</option><option value="zu">祖鲁语</option> </select> <st-div class="__exchange__"> <st-span class="st-icon-exchange"></st-span> </st-div> <select> <option value="">自动选择</option> <option value="zh">中文</option><option value="zh-CN">中文(简体)</option><option value="zh-HK">中文(香港)</option><option value="zh-TW">中文(繁体)</option><option value="en">英语</option><option value="ja">日语</option><option value="ko">朝鲜语</option><option value="de">德语</option><option value="fr">法语</option><option value="ru">俄语</option><option value="th">泰语</option><option value="af">南非语</option><option value="ar">阿拉伯语</option><option value="az">阿塞拜疆语</option><option value="be">比利时语</option><option value="bg">保加利亚语</option><option value="ca">加泰隆语</option><option value="cs">捷克语</option><option value="cy">威尔士语</option><option value="da">丹麦语</option><option value="dv">第维埃语</option><option value="el">希腊语</option><option value="eo">世界语</option><option value="es">西班牙语</option><option value="et">爱沙尼亚语</option><option value="eu">巴士克语</option><option value="fa">法斯语</option><option value="fi">芬兰语</option><option value="fo">法罗语</option><option value="gl">加里西亚语</option><option value="gu">古吉拉特语</option><option value="he">希伯来语</option><option value="hi">印地语</option><option value="hr">克罗地亚语</option><option value="hu">匈牙利语</option><option value="hy">亚美尼亚语</option><option value="id">印度尼西亚语</option><option value="is">冰岛语</option><option value="it">意大利语</option><option value="ka">格鲁吉亚语</option><option value="kk">哈萨克语</option><option value="kn">卡纳拉语</option><option value="kok">孔卡尼语</option><option value="ky">吉尔吉斯语</option><option value="lt">立陶宛语</option><option value="lv">拉脱维亚语</option><option value="mi">毛利语</option><option value="mk">马其顿语</option><option value="mn">蒙古语</option><option value="mr">马拉地语</option><option value="ms">马来语</option><option value="mt">马耳他语</option><option value="nb">挪威语(伯克梅尔)</option><option value="nl">荷兰语</option><option value="ns">北梭托语</option><option value="pa">旁遮普语</option><option value="pl">波兰语</option><option value="pt">葡萄牙语</option><option value="qu">克丘亚语</option><option value="ro">罗马尼亚语</option><option value="sa">梵文</option><option value="se">北萨摩斯语</option><option value="sk">斯洛伐克语</option><option value="sl">斯洛文尼亚语</option><option value="sq">阿尔巴尼亚语</option><option value="sv">瑞典语</option><option value="sw">斯瓦希里语</option><option value="syr">叙利亚语</option><option value="ta">泰米尔语</option><option value="te">泰卢固语</option><option value="tl">塔加路语</option><option value="tn">茨瓦纳语</option><option value="tr">土耳其语</option><option value="ts">宗加语</option><option value="tt">鞑靼语</option><option value="uk">乌克兰语</option><option value="ur">乌都语</option><option value="uz">乌兹别克语</option><option value="vi">越南语</option><option value="xh">班图语</option><option value="zu">祖鲁语</option> </select> </st-div> <st-div> <select> <option value="YouDao">有道翻译</option> <option value="BaiDu">百度翻译</option> <option value="Google">谷歌翻译</option> <option value="GoogleCN">谷歌翻译（国内）</option> </select> <st-div class="__action-list__"> <st-div class="__button__ __btn-translate__">翻译 <st-span class="st-icon-down-dir"></st-span> </st-div> <st-div class="__expand__"> <st-div class="__button__">朗读</st-div> <st-div class="__button__">复制</st-div> </st-div> </st-div> </st-div> </st-div> <st-div class="__translate-result__" style="display: none;">正在查询，请稍候……</st-div> <st-div class="__translate-result__"> <st-div style="display: none;"> <st-span></st-span> <st-span class="__retry__">重试</st-span> </st-div> <st-div> <st-div class="__phonetic__"> <st-span style="display: none;"></st-span> <st-span class="__copy-and-read__"> <st-span>朗读</st-span> <st-span style="display: none;">复制</st-span> </st-span> </st-div> <st-div style="display: none;"> <st-ul>  </st-ul> <st-div class="__copy-and-read__"> <st-span class="__copy-and-read__">复制</st-span> </st-div> </st-div> <st-div style="display: none;">  <st-div class="__copy-and-read__"> <st-span class="__copy-and-read__">朗读</st-span> <st-span class="__copy-and-read__">复制</st-span> </st-div> </st-div> </st-div> </st-div> <st-footer> <st-span style="">via <a target="_blank" href="https://www.cnblogs.com/jajian/p/9695055.html">谷歌翻译（国内）</a></st-span> </st-footer> </st-div> <st-div class="__st-btn__" style="display: none; position: fixed; z-index: 99999; left: 0px; top: 0px; transform: translateX(643px) translateY(260px);">译</st-div> </st-div></body></html>
