@@ -1,7 +1,5 @@
 package com.learn.java;
 
-import java.util.Arrays;
-
 /**
  * @author xzy
  * @date 2020-03-25 18:56
@@ -16,9 +14,10 @@ public class Main {
                 {4, 7, 10, 13},
                 {6, 8, 11, 15}
         };
-        for (int i = 0; i < 40; i++) {
-            System.out.println("target:" + i + " find:" + main.find(i, array));
-        }
+        System.out.println("target:" + 11 + " find:" + main.find2(11, array));
+/*        for (int i = 0; i < 40; i++) {
+            System.out.println("target:" + i + " find:" + main.find2(i, array));
+        }*/
     }
 
     /**
@@ -59,6 +58,39 @@ public class Main {
         for (int row = 0; row < array[0].length; row++) {
             if (binarySearch(target, array[row]) >= 0) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean find2(int target, int[][] array) {
+
+        //rowMax:行坐标最大值 columnMax:列坐标最大值
+        int rowMax = array.length - 1;
+        int columnMax = array[0].length - 1;
+
+        //空矩阵判断
+        if (rowMax < 0 || columnMax < 0) {
+            return false;
+        }
+
+        //target是否有可能存在于矩阵
+        if (target < array[0][0] || target > array[rowMax][columnMax]) {
+            return false;
+        }
+
+        //（rowPoint,columnPoint）当前检查元素的坐标
+        int rowPoint = 0;
+        int columnPoint = columnMax;
+        while (rowPoint <= rowMax && columnPoint >= 0) {
+            if (target == array[rowPoint][columnPoint]) {
+                return true;
+            } else if (target > array[rowPoint][columnPoint]) {
+                //不可能在这一行
+                rowPoint++;
+            } else {
+                //不可能在这一列
+                columnPoint--;
             }
         }
         return false;
