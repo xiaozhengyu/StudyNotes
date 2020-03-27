@@ -1,5 +1,9 @@
 package com.learn.java;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author xzy
  * @date 2020-03-25 18:56
@@ -7,92 +11,45 @@ package com.learn.java;
  */
 public class Main {
     public static void main(String[] args) {
-        Main main = new Main();
-        int[][] array = new int[][]{
-                {1, 2, 8, 9},
-                {2, 4, 9, 12},
-                {4, 7, 10, 13},
-                {6, 8, 11, 15}
-        };
-        System.out.println("target:" + 11 + " find:" + main.find2(11, array));
-/*        for (int i = 0; i < 40; i++) {
-            System.out.println("target:" + i + " find:" + main.find2(i, array));
-        }*/
+        int[] preOrderTree = new int[]{1, 2, 4, 7, 5, 8, 9, 3, 6};
+        int[] inOrderTree = new int[]{7, 4, 2, 8, 5, 9, 1, 6, 3};
+        TreeNode treeNode1 = new TreeNode(1);
+        TreeNode treeNode2 = new TreeNode(2);
+        TreeNode treeNode3 = new TreeNode(3);
+        TreeNode treeNode4 = new TreeNode(4);
+        TreeNode treeNode5 = new TreeNode(5);
+        TreeNode treeNode6 = new TreeNode(6);
+        TreeNode treeNode7 = new TreeNode(7);
+        TreeNode treeNode8 = new TreeNode(8);
+        TreeNode treeNode9 = new TreeNode(9);
+        treeNode1.left = treeNode2;
+        treeNode1.right = treeNode3;
+        treeNode2.left = treeNode4;
+        treeNode2.right = treeNode5;
+        treeNode3.left = treeNode6;
+        treeNode4.left = treeNode7;
+        treeNode5.left = treeNode8;
+        treeNode5.right = treeNode9;
+        Main.preOrder(treeNode1);
     }
 
     /**
-     * @param target - 查找目标
-     * @param array  - 查找数组
-     * @return 找到：元素下标  找不到：-1
+     * 先序遍历
+     *
+     * @param treeNode - 二叉树
      */
-    public int binarySearch(int target, int[] array) {
-        // head:查找区间头 middle:查找区间中 end:查找区间尾
-        int head = 0;
-        int end = array.length - 1;
-        int middle = end / 2;
-
-        //1. 不可能找得到
-        if (target < array[head] || target > array[end]) {
-            return -2;
+    public static void preOrder(TreeNode treeNode) {
+        System.out.print(treeNode.val + " ");
+        if (treeNode.left != null) {
+            preOrder(treeNode.left);
         }
-
-        //2. 二分查找
-        while (head <= end) {
-            if (target == array[middle]) {
-                //1. 找到
-                return middle;
-            } else if (target < array[middle]) {
-                //2.向左侧继续找
-                end = middle - 1;
-                middle = (end - head) / 2 + head;
-            } else {
-                //3.向右侧继续找
-                head = middle + 1;
-                middle = (end - head) / 2 + head;
-            }
+        if (treeNode.right != null) {
+            preOrder(treeNode.right);
         }
-        return -1;
     }
 
-    public boolean find(int target, int[][] array) {
-        for (int row = 0; row < array[0].length; row++) {
-            if (binarySearch(target, array[row]) >= 0) {
-                return true;
-            }
-        }
-        return false;
+    public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
+        return null;
     }
 
-    public boolean find2(int target, int[][] array) {
-
-        //rowMax:行坐标最大值 columnMax:列坐标最大值
-        int rowMax = array.length - 1;
-        int columnMax = array[0].length - 1;
-
-        //空矩阵判断
-        if (rowMax < 0 || columnMax < 0) {
-            return false;
-        }
-
-        //target是否有可能存在于矩阵
-        if (target < array[0][0] || target > array[rowMax][columnMax]) {
-            return false;
-        }
-
-        //（rowPoint,columnPoint）当前检查元素的坐标
-        int rowPoint = 0;
-        int columnPoint = columnMax;
-        while (rowPoint <= rowMax && columnPoint >= 0) {
-            if (target == array[rowPoint][columnPoint]) {
-                return true;
-            } else if (target > array[rowPoint][columnPoint]) {
-                //不可能在这一行
-                rowPoint++;
-            } else {
-                //不可能在这一列
-                columnPoint--;
-            }
-        }
-        return false;
-    }
 }
