@@ -13,10 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
+        //除2取余
 
-    }
-
-    public int JumpFloorII(int target) {
-        return (int) Math.pow(2, target - 1);
     }
 }
