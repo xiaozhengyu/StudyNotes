@@ -5,16 +5,16 @@ package com.learn.java.genericclass;
  * @date 2020-04-05 16:44
  * 说明：
  */
-public class Pair<T, U> {
+public class Pair<T> {
     private T first;
-    private U second;
+    private T second;
 
     public Pair() {
         this.first = null;
         this.second = null;
     }
 
-    public Pair(T first, U second) {
+    public Pair(T first, T second) {
         this.first = first;
         this.second = second;
     }
@@ -23,7 +23,7 @@ public class Pair<T, U> {
         return this.first;
     }
 
-    public U getSecond() {
+    public T getSecond() {
         return this.second;
     }
 
@@ -31,7 +31,7 @@ public class Pair<T, U> {
         this.first = first;
     }
 
-    public void setSecond(U second) {
+    public void setSecond(T second) {
         this.second = second;
     }
 }

@@ -213,3 +213,95 @@ Integer first = pair.first;
 
 ## 翻译泛型方法
 
+有泛型类Pair：
+
+```java
+public class Pair<T> {
+    private T first;
+    private T second;
+
+    public Pair() {this.first = null;this.second = null;}
+
+    public Pair(T first, T second) {this.first = first;this.second = second;}
+
+    public T getFirst() {return this.first;}
+
+    public T getSecond() {return this.second;}
+
+    public void setFirst(T first) {this.first = first;}
+
+    public void setSecond(T second) {this.second = second;}
+}
+```
+
+定义Pair类的子类DateInterval：
+
+```java
+public class DateInterval extends Pair<LocalDate> {
+    @Override
+    public void setSecond(LocalDate second) {super.setSecond(second);}
+}
+```
+
+由于虚拟机中并没有泛型类型对象——所有对象都属于普通类。无论何时定义泛型类型，实际上将自动生成一个对应的原始类型，类型变量将会被擦除，并被替换为第一个限定类型（如果没有限定类型则被替换为Object类型）。因此Pair类实际上对应的是一个原始类型：
+
+```java
+public class Pair {
+    private Object first;
+    private Object second;
+
+    public Pair() {this.first = null;this.second = null;}
+
+    public Pair(Object first, Object second) {this.first = first;this.second = second;}
+
+    public Object getFirst() {return this.first;}
+
+    public Object getSecond() {return this.second;}
+
+    public void setFirst(Object first) {this.first = first;}
+
+    public void setSecond(Object second) {this.second = second;}
+}
+```
+因此，实际上DateInterval类中存在两个setSecond方法：
+
+```java
+void setSecond(LocalDate second){...}
+void setSecond(Object second){...}
+```
+
+执行下面的语句序列：
+
+```java
+public static void main(String[] args) {
+    Pair<LocalDate> pair = new DateInterval();
+    pair.setSecond(LocalDate.now());
+    
+    Method[] methods = pair.getClass().getDeclaredMethods();
+    for (Method method:methods){
+        System.out.println(method);
+    }
+}
+```
+
+控制台打印：
+
+```java
+public void com.xxx.DateInterval.setSecond(java.time.LocalDate)
+public void com.xxx.DateInterval.setSecond(java.lang.Object)
+```
+
+上面的代码中，希望对setSecond的调用具有多态性，并调用最合适的那个方法。由于pair引用的是DataInterval对象，所以应该调用DateInterval.setSecond(java.time.LocalDate)方法，但是由于Pair类类型擦除，所以实际上调用的是DateInterval.setSecond(java.lang.Object)方法，为了解决类型擦除和多态发生的冲突，DateInterval.setSecond(java.lang.Object)方法实际由编译器生成：
+
+```java
+public void setSecond(Object second){
+    setSecond((LocalDate)second);
+}
+```
+
+需要记住有关Java泛型转换的事实：
+
++ 虚拟机中没有泛型，只有普通的类和方法。
++ 所有的类型参数都将被擦除。
++ 桥方法被合成来保持多态。
++ 为保持类型的安全性，必要时插入强制类型转换。
