@@ -50,4 +50,76 @@ public class TreeNode {
     public static void rootSecondRead(TreeNode root) {
 
     }
+
+    /**
+     * 获取镜像二叉树（递归实现）
+     *
+     * @param root - 原二叉树根节点
+     * @return - 镜像二叉树
+     */
+    public static TreeNode mirror(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        //1.当前根节点左右子树互换
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        root.right = left;
+        root.left = right;
+        //2.对左右子树的根节点重复上述过程
+        mirror(left);
+        mirror(right);
+        return root;
+    }
+
+    /**
+     * 获取镜像二叉树（迭代实现）
+     *
+     * @param root - 原二叉树根节点
+     * @return - 镜像二叉树
+     */
+    public static TreeNode mirror2(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        /*
+         * 遍历二叉树的每个节点，交换其左右子树
+         */
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        TreeNode readNow;
+        TreeNode leftChild;
+        TreeNode rightChild;
+        while (!stack.isEmpty()) {
+            readNow = stack.pop();
+            leftChild = readNow.right;
+            rightChild = readNow.left;
+            readNow.left = leftChild;
+            readNow.right = rightChild;
+            if (rightChild != null) {
+                stack.push(rightChild);
+            }
+            if (leftChild != null) {
+                stack.push(leftChild);
+            }
+        }
+        return root;
+    }
+
+    public static void main(String[] args) {
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node2 = new TreeNode(2);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node5 = new TreeNode(5);
+        TreeNode node6 = new TreeNode(6);
+        TreeNode node7 = new TreeNode(7);
+        node1.left = node2;
+        node1.right = node3;
+        node2.left = node4;
+        node2.right = node5;
+        node3.left = node6;
+        node3.right = node7;
+        node1 = TreeNode.mirror2(node1);
+    }
 }
