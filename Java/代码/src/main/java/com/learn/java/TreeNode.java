@@ -50,28 +50,4 @@ public class TreeNode {
     public static void rootSecondRead(TreeNode root) {
 
     }
-
-/*    public static void main(String[] args) {
-        TreeNode a = new TreeNode('A');
-        TreeNode b = new TreeNode('B');
-        TreeNode c = new TreeNode('C');
-        TreeNode d = new TreeNode('D');
-        TreeNode e = new TreeNode('E');
-        TreeNode f = new TreeNode('F');
-        TreeNode g = new TreeNode('G');
-        a.left = b;
-        a.right = c;
-        b.left = d;
-        b.right = e;
-        c.left = f;
-        c.right = g;
-        *//**
-         *      A
-         *   B    C
-         * D  E  F  G
-         * 先序遍历：A B D E C F G
-         * 中序遍历：D B E A F C G
-         * 后序遍历：D E B F G C A
-         *//*
-    }*/
 }
