@@ -8,11 +8,11 @@ import java.util.Stack;
  * 说明：
  */
 public class TreeNode {
-    public char val = 0;
+    public int val = 0;
     public TreeNode left = null;
     public TreeNode right = null;
 
-    public TreeNode(char val) {
+    public TreeNode(int val) {
         this.val = val;
     }
 
@@ -51,7 +51,7 @@ public class TreeNode {
 
     }
 
-    public static void main(String[] args) {
+/*    public static void main(String[] args) {
         TreeNode a = new TreeNode('A');
         TreeNode b = new TreeNode('B');
         TreeNode c = new TreeNode('C');
@@ -65,13 +65,13 @@ public class TreeNode {
         b.right = e;
         c.left = f;
         c.right = g;
-        /**
+        *//**
          *      A
          *   B    C
          * D  E  F  G
          * 先序遍历：A B D E C F G
          * 中序遍历：D B E A F C G
          * 后序遍历：D E B F G C A
-         */
-    }
+         *//*
+    }*/
 }
