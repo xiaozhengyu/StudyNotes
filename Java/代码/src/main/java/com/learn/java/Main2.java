@@ -1,6 +1,6 @@
 package com.learn.java;
 
-import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * @author xzy
@@ -9,66 +9,36 @@ import java.util.ArrayList;
  */
 public class Main2 {
     public static void main(String[] args) {
-        int[][] matrix = new int[][]{
-                {1, 2, 3, 4, 5, 6}};
-        Main2.printMatrix(matrix);
+        int[] pushA = new int[]{1, 2, 3, 4, 5};
+        int[] popA = new int[]{1, 2, 3, 4, 5};
+        int[] popB = new int[]{4, 5, 3, 2, 1};
+        int[] popC = new int[]{4, 3, 5, 1, 2};
+        System.out.println(Main2.isPopOrder(pushA, popA));
+        System.out.println(Main2.isPopOrder(pushA, popB));
+        System.out.println(Main2.isPopOrder(pushA, popC));
     }
 
-    public static ArrayList<Integer> printMatrix(int[][] matrix) {
-        /**
-         *           0  1  2  3  4  5
-         *          ____________________
-         * rL   0  [ 1  2  3  4  5  6  ]
-         *      1  [ 7  8  9  10 11 12 ]
-         * rR   2  [ 13 14 15 16 17 18 ]
-         *           cL             cR
+    /**
+     * 判断popA是否是入栈序列pushA的一个出栈序列
+     *
+     * @param pushA - 入栈序列
+     * @param popA  - 待判断序列
+     * @return - true/false
+     */
+    public static boolean isPopOrder(int[] pushA, int[] popA) {
+        /*
+         * 借助pushA和popA同时模拟入栈和出栈操作，
+         * 若最后栈为空，popA是pushA的一个出栈序列。
          */
-        ArrayList<Integer> result = new ArrayList<>();
-        int rowLeft = 0;
-        int rowRight = matrix.length - 1;
-        int columnLeft = 0;
-        int columnRight = matrix[0].length - 1;
-        while (true) {
-            // 右 →
-            for (int x = columnLeft; x <= columnRight; x++) {
-                System.out.println(matrix[rowLeft][x]);
-                result.add(matrix[rowLeft][x]);
-            }
-            rowLeft++;
-            if (rowLeft > rowRight) {
-                break;
-            }
-
-            // 下 ↓
-            for (int y = rowLeft; y <= rowRight; y++) {
-                System.out.println(matrix[y][columnRight]);
-                result.add(matrix[y][columnRight]);
-            }
-            columnRight--;
-            if (columnRight < columnLeft) {
-                break;
-            }
-
-            // 左 ←
-            for (int x = columnRight; x >= columnLeft; x--) {
-                System.out.println(matrix[rowRight][x]);
-                result.add(matrix[rowRight][x]);
-            }
-            rowRight--;
-            if (rowRight < rowLeft) {
-                break;
-            }
-
-            // 上 ↑
-            for (int y = rowRight; y >= rowLeft; y--) {
-                System.out.println(matrix[y][columnLeft]);
-                result.add(matrix[y][columnLeft]);
-            }
-            columnLeft++;
-            if (columnLeft > columnRight) {
-                break;
+        Stack<Integer> stack = new Stack<>();
+        int j = 0;
+        for (int i = 0; i < pushA.length; i++) {
+            stack.push(pushA[i]);
+            while (!stack.isEmpty() && stack.peek() == popA[j]) {
+                stack.pop();
+                j++;
             }
         }
-        return result;
+        return stack.isEmpty();
     }
 }
