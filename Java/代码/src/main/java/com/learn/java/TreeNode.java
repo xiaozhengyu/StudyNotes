@@ -1,6 +1,6 @@
 package com.learn.java;
 
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author xzy
@@ -106,6 +106,34 @@ public class TreeNode {
         return root;
     }
 
+    /**
+     * 层次遍历二叉树（迭代实现）
+     *
+     * @param root - 二叉树根节点
+     */
+    public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        //利用队列先进先出的特性，在遍历当前层时将下一层的元素入队。
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        TreeNode readNow;
+        while (!queue.isEmpty()) {
+            readNow = queue.remove();
+            result.add(readNow.val);
+            if (readNow.left != null) {
+                queue.add(readNow.left);
+            }
+            if (readNow.right != null) {
+                queue.add(readNow.right);
+            }
+        }
+        return result;
+    }
+
+
     public static void main(String[] args) {
         TreeNode node1 = new TreeNode(1);
         TreeNode node2 = new TreeNode(2);
@@ -120,6 +148,6 @@ public class TreeNode {
         node2.right = node5;
         node3.left = node6;
         node3.right = node7;
-        node1 = TreeNode.mirror2(node1);
+        TreeNode treeNode = new TreeNode(0);
     }
 }
