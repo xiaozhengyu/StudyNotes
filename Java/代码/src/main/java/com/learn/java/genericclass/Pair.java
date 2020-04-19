@@ -1,5 +1,7 @@
 package com.learn.java.genericclass;
 
+import java.util.function.Supplier;
+
 /**
  * @author xzy
  * @date 2020-04-05 16:44
@@ -33,5 +35,13 @@ public class Pair<T> {
 
     public void setSecond(T second) {
         this.second = second;
+    }
+
+    @Override
+    public String toString() {
+        return "Pair{" +
+                "first=" + first +
+                ", second=" + second +
+                '}';
     }
 }

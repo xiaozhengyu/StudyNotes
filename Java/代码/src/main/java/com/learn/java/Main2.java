@@ -1,8 +1,6 @@
 package com.learn.java;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author xzy

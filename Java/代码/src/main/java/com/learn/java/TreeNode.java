@@ -17,11 +17,11 @@ public class TreeNode {
     }
 
     /**
-     * 迭代遍历二叉树（先序遍历）
+     * 先序遍历二叉树（迭代方式）
      *
      * @param root - 树根结点
      */
-    public static void rootFirstRead(TreeNode root) {
+    public static void preOrderTraversal(TreeNode root) {
         if (root == null) {
             return;
         }
@@ -43,11 +43,20 @@ public class TreeNode {
     }
 
     /**
-     * 迭代遍历二叉树（中序遍历）
+     * 中序遍历二叉树（迭代方式）
      *
-     * @param root - 根结点
+     * @param root - 树根结点
      */
-    public static void rootSecondRead(TreeNode root) {
+    public static void inOrderTraversal(TreeNode root) {
+        
+    }
+
+    /**
+     * 后续遍历二叉树（迭代方式）
+     *
+     * @param root - 树根节点
+     */
+    public static void postOrderTraversal(TreeNode root) {
 
     }
 
