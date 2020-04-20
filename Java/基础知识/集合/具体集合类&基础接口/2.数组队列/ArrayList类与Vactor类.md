@@ -1,0 +1,3 @@
+# ArrayList类与Vactor类
+
+Vector类中所有方法都是同步的，但这是以性能为代价的。ArrayList不是同步的，建议在不需要同步时使用ArrayList。
