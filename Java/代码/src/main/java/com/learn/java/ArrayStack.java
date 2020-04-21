@@ -1,0 +1,179 @@
+package com.learn.java;
+
+import lombok.Data;
+
+import java.util.EmptyStackException;
+
+/**
+ * @author xzy
+ * @date 2020-04-21 21:01
+ * 说明：用数组实现栈
+ */
+@Data
+public class ArrayStack {
+    /**
+     * 数组初始大小（默认）
+     */
+    private static final int DEFAULT_CAPACITY = 10;
+    /**
+     * 数组扩容单位（默认）
+     */
+    private static final int DEFAULT_EXPANSION = 10;
+    /**
+     * 数组容量
+     */
+    private int capacity;
+    /**
+     * 下一个结点的下标 -1：无后继结点 -2：空
+     */
+    private int[] next;
+    /**
+     * 当前结点存储的数据
+     */
+    private int[] value;
+    /**
+     * 链表头结点的下标
+     */
+    private int head;
+    /**
+     * 链表尾结点的下标
+     */
+    private int end;
+    /**
+     * 链表元素总数
+     */
+    private int size;
+
+    public ArrayStack() {
+        this.capacity = DEFAULT_CAPACITY;
+        this.next = new int[DEFAULT_CAPACITY];
+        fill(-2);
+        this.value = new int[DEFAULT_CAPACITY];
+        this.head = -1;
+        this.end = -1;
+        this.size = 0;
+    }
+
+    /**
+     * 入栈
+     *
+     * @param element - 入栈元素
+     * @return - -1：入栈失败 other：下标
+     */
+    public int push(int element) {
+        if (isEmpty()) {
+            value[0] = element;
+            next[0] = -1;
+            head = 0;
+            end = 0;
+            size++;
+            return 0;
+        }
+
+        int newNodeIndex = findFreeArea();
+        if (newNodeIndex == -1) {
+            return -1;
+        }
+        value[newNodeIndex] = element;
+        next[newNodeIndex] = -1;
+        next[end] = newNodeIndex;
+        end = newNodeIndex;
+        size++;
+        return newNodeIndex;
+    }
+
+    /**
+     * 出栈
+     *
+     * @return - 栈顶元素
+     * @throws EmptyStackException - 空栈异常
+     */
+    public int pop() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        int dropIndex = head;
+        if (size != 1) {
+            head = next[head];
+            //free the area
+            next[dropIndex] = -2;
+        } else {
+            head = -1;
+            end = -1;
+        }
+        size--;
+        return value[dropIndex];
+    }
+
+    /**
+     * 获取栈顶元素
+     *
+     * @return - 栈顶元素
+     * @throws EmptyStackException - 空栈异常
+     */
+    public int peek() {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        return value[head];
+    }
+
+    /**
+     * 查找指定元素在栈中的所有位置
+     *
+     * @param element - 指定元素
+     * @return - 指定元素在栈中的所有位置
+     * @throws EmptyStackException - 空栈异常
+     */
+    public boolean contain(int element) {
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+
+        int readNow = head;
+        while (readNow != -1) {
+            if (value[readNow] == element) {
+                return true;
+            }
+            readNow = next[readNow];
+        }
+        return false;
+    }
+
+    /**
+     * 填充数组
+     *
+     * @param fillValue - 填充数据
+     */
+    private void fill(int fillValue) {
+        for (int i = 0; i < this.capacity; i++) {
+            this.next[i] = fillValue;
+        }
+    }
+
+    /**
+     * 寻找空位
+     *
+     * @return - 空位下标
+     */
+    private int findFreeArea() {
+        if (size == capacity) {
+            return -1;
+        }
+        for (int i = 0; i < capacity; i++) {
+            if (next[i] == -2) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 空链表判断
+     *
+     * @return - true or false
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+}
