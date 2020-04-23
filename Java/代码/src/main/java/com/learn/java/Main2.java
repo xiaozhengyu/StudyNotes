@@ -9,12 +9,6 @@ import java.util.*;
  */
 public class Main2 {
     public static void main(String[] args) {
-        ArrayStack arrayStack = new ArrayStack();
-        for (int i =0;i<10;i++){
-            arrayStack.push(i);
-        }
-        while (!arrayStack.isEmpty()){
-            System.out.println(arrayStack.pop());
-        }
+       List<Integer> integerList = new ArrayList<>(1000000);
     }
 }
