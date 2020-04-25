@@ -1,5 +1,9 @@
 package com.learn.java;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.*;
 
 /**
@@ -7,6 +11,9 @@ import java.util.*;
  * @date 2020-04-01 00:03
  * 说明：
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TreeNode {
     public int val = 0;
     public TreeNode left = null;
@@ -48,7 +55,7 @@ public class TreeNode {
      * @param root - 树根结点
      */
     public static void inOrderTraversal(TreeNode root) {
-        
+
     }
 
     /**
@@ -141,7 +148,6 @@ public class TreeNode {
         }
         return result;
     }
-
 
     public static void main(String[] args) {
         TreeNode node1 = new TreeNode(1);

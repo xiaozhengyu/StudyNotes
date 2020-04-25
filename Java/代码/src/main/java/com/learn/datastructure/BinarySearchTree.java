@@ -67,9 +67,21 @@ public class BinarySearchTree {
      * @param newNode - new node
      */
     private void replace(BinaryTreeNode oldNode, BinaryTreeNode newNode) {
-        //1. 接收父结点
+        //1. 接收oldNode的父结点
+        if (oldNode.getPrevious() == null) {
+            //1.1 oldNode没有父结点（oldNode是根节点）
+            this.root = newNode;
+        } else if (oldNode == oldNode.getPrevious().getLeft()) {
+            //1.2 oldNode是父结点的左结点
+            oldNode.getPrevious().setLeft(newNode);
+        } else {
+            //1.3 oldNode是父结点的右结点
+            oldNode.getPrevious().setRight(newNode);
+        }
+        //2. 安置newNode的父结点和子结点
+        
+        //2. 接收oldNode子结点
 
-        //2. 接收子结点
     }
 
     /**
