@@ -204,7 +204,7 @@ T[] mm = new T[2];//Error - Type parameter 'T' cannot be instantiated directly
 
 ## 7.泛型类的静态上下文中类型变量无效
 
-![image-20200418193112038](E:\学习笔记\StudyNotes\Java\基础知识\泛型程序设计\markdown图片\image-20200418193112038.png)
+![image-20200418193112038](markdown/Java泛型的约束与局限性.assets/image-20200418193112038.png)
 
 ## 8.不能抛出或捕获泛型类的实例
 

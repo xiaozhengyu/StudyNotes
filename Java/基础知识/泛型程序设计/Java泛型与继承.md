@@ -20,4 +20,4 @@ public static void main(String[] args) {
 
 虽然Manager是Employee的子类，但ArrayList<Manager>与ArrayList<Employee>没有任何直接关系。
 
-![image-20200418200529230](E:\学习笔记\StudyNotes\Java\基础知识\泛型程序设计\markdown图片\image-20200418200529230.png)
+![image-20200418200529230](markdown/Java泛型与继承.assets/image-20200418200529230.png)

@@ -8,11 +8,11 @@ Write Once, Run Anywhere.
 
 计算机并不能直接执行我们编写好的java程序，因为计算机只认识0和1，java程序需要先经过编译才能被计算机执行。
 
-![img](E:\学习笔记\StudyNotes\Java\基础知识\markdown图片\15539284762449.jpg)
+![img](markdown/Java语言_Java平台无关性.assets/15539284762449.jpg)
 
 在Java中，javac完成前端编译，将.java文件转换成.class文件，jvm完成后端编译，将.class文件转换二进制文件。‘
 
-![img](E:\学习笔记\StudyNotes\Java\基础知识\markdown图片\15539291533175.jpg)
+![img](markdown/Java语言_Java平台无关性.assets/15539291533175.jpg)
 
 ## java虚拟机
 
@@ -20,9 +20,9 @@ Write Once, Run Anywhere.
 
 **虽然Java语言是平台无关的，但JVM确实是平台有关的。**不同的操作系统需要使用不同的JVM：
 
-![img](E:\学习笔记\StudyNotes\Java\基础知识\markdown图片\15539297082025.jpg)
+![img](markdown/Java语言_Java平台无关性.assets/15539297082025.jpg)
 
-![img](E:\学习笔记\StudyNotes\Java\基础知识\markdown图片\15539303829914.jpg)
+![img](markdown/Java语言_Java平台无关性.assets/15539303829914.jpg)
 
 java之所以能实现跨平台，是因为JVM充当了桥梁。
 
@@ -46,7 +46,7 @@ java之所以能实现跨平台，是因为JVM充当了桥梁。
 
 但是在C++中却不是固定的了。在16位计算机上，int类型的长度可能为两字节；在32位计算机上，可能为4字节；当64位计算机流行起来后，int类型的长度可能会达到8字节。（这里说的都是可能哦！）
 
-![img](E:\学习笔记\StudyNotes\Java\基础知识\markdown图片\15539319645205.jpg)
+![img](markdown/Java语言_Java平台无关性.assets/15539319645205.jpg)
 
 通过保证基本数据类型在所有平台的一致性，Java语言为平台无关性提供强了有力的支持。
 
