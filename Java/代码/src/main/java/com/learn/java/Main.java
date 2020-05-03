@@ -1,7 +1,5 @@
 package com.learn.java;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author xzy

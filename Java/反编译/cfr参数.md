@@ -76,7 +76,7 @@ CFR 0.149
 <font color = yellow>--stringbuilder</font>                   (boolean)  default: true if class file from version 49.0 (Java 5) or greater
    --stringconcat                   (boolean)  default: true if class file from version 53.0 (Java 9) or greater
    --sugarasserts                   (boolean)  default: true
-   --sugarboxing                    (boolean)  default: true
+   <font color = yellow>--sugarboxing</font>                    (boolean)  default: true
    --sugarenums                     (boolean)  default: true if class file from version 49.0 (Java 5) or greater
    --switchexpression               (boolean)  default: true if class file from version 57.0 (Java 13) or greater, or experimental in 56.0 (Java 12)
    --tidymonitors                   (boolean)  default: true
