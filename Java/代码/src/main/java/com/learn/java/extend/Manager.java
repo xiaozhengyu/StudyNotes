@@ -14,14 +14,7 @@ import java.util.List;
  */
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Manager extends Employee {
-    List<Employee> employeeList = new LinkedList<>();
-
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
+    private Employee secretary;
 }
