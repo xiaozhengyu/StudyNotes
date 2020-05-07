@@ -9,7 +9,7 @@ import java.io.*;
  */
 public class Singleton implements Serializable {
 
-    public static final Singleton SINGLETON = new Singleton(100);
+    private static final Singleton SINGLETON = new Singleton(100);
 
     private int value;
 
@@ -18,12 +18,16 @@ public class Singleton implements Serializable {
         this.value = value;
     }
 
+    public static Singleton getInstance() {
+        return SINGLETON;
+    }
+
     protected Object readResolve() throws ObjectStreamException {
         return SINGLETON;
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Singleton singleton1 = Singleton.SINGLETON;
+        Singleton singleton1 = Singleton.getInstance();
 
         ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("singleton.dat"));
         output.writeObject(singleton1);

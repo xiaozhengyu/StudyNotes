@@ -26,13 +26,4 @@ public class Manager extends Employee{
     public void setSecretary(Employee secretary) {
         this.secretary = secretary;
     }
-
-    public Manager(String name, Integer age, char sex, Double salary, Employee secretary) {
-        super(name, age, sex, salary);
-        this.secretary = secretary;
-    }
-
-    public Manager(Employee secretary) {
-        this.secretary = secretary;
-    }
 }
