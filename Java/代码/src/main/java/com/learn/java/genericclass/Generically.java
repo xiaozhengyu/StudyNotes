@@ -1,7 +1,5 @@
 package com.learn.java.genericclass;
 
-import com.learn.java.extend.Employee;
-import com.learn.java.extend.Manager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +14,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Generically<T> {
     T type;
-
-    public static void main(String[] args) {
-        Manager manager = new Manager();
-
-        Generically<Manager> managerGenerically = new Generically<>(manager);
-//        Generically<Employee> employeeGenerically = managerGenerically;//Error
-    }
 }

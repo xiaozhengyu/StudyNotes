@@ -15,8 +15,20 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee implements Serializable {
+    /**
+     * 姓名
+     */
     private String name;
+    /**
+     * 年龄
+     */
     private Integer age;
+    /**
+     * 性别
+     */
     private char sex;
-    private Double salary = 10000.0;
+    /**
+     * 工资
+     */
+    private Double salary;
 }
