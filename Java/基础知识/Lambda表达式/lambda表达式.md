@@ -1,5 +1,7 @@
 # lambda表达式
 
+---
+
 ## 为什么引入lambda表达式
 
 lambda表达式是一个可传递的代码块，可以在以后执行一次或多次。在解释java为什么引入lambda表示式之前，不妨先回想一下，之前我们是怎么实现代码块的传递的？
@@ -89,34 +91,42 @@ public static void main(String[] args) {
 
 ## lambda表达式语法
 
-如上面的代码所展示的那样，lambda表达式就是一个代码块，以及必须传入代码的变量规范。
+如上面的代码所展示的那样，<font color = orange>lambda表达式就是一个代码块，以及必须传入代码的变量规范。</font>
 
-一般的lambda表达式形式为：( 参数 )-> 表达式，如果需要完成的工作无法用一个表达式完成，可以像方法一样，用{}将需要执行的语句框起来：( 参数 )-> {表达式1;表达式2;表达式3;}
+一般的lambda表达式形式为：
 
-需要注意的几点：
 ```
-  1. 如果没有参数，需要保留空括号。
-    ()->{...}
-  2. 如果可以推导出参数类型，可以忽略其类型。
-    Comparator<String> comparator = (s1,s2)->{s1.length()-s2.length();}
-  3. 如果方法只有一个参数，而且这个参数的类型是可以推到出来的，那么可以省去小括号。
-    ActionListener listener = event->{......}
-  4.不需要指定lambda表达式的返回值类型。
+( 参数 )-> 表达式
 ```
 
-## 函数式接口
+如果需要完成的工作无法用一个表达式完成，可以像方法一样，用{}将需要执行的语句框起来：
 
-只有一个抽象方法的接口被称为函数式接口。对于函数式接口，可以提供一个lambda表示式。
-
-```java
-public interface ActionListener extends EventListener {
-
-    /**
-     * Invoked when an action occurs.
-     */
-    public void actionPerformed(ActionEvent e);
-    
-    //ActionListener actionListener = e->{......};
+```
+( 参数 )-> {
+    表达式1;
+    表达式2;
+    表达式3;
 }
 ```
+
+需要注意的几点：
+  >1. 如果没有参数，需要<font color = orange>保留空括号</font>。
+      ()->{...}
+      
+  2. 如果可以推导出参数类型，可以忽略其类型。
+      
+      ```java
+      Comparator<String> comparator = (s1,s2)->{s1.length()-s2.length();}
+      ```
+      
+  3. 如果方法只有一个参数，而且这个参数的类型是可以推到出来的，那么可以省去小括号。
+      ActionListener listener = event->{......}
+      
+  4. <font color = #00BFFF>不需要指定lambda表达式的返回值类型。</font>lambda表达式的返回值类型总是根据上下文推导得出。
+  
+  5. 在lambda表达式中，只能引用值不会改变的变量。
+  
+  6. lambda表达式中声明一个与局部变量同名的参数或局部变量是不合法的。
+  
+  7. 在一个lambda表达之中使用<font color = #00BFFF>this关键字</font>时，是指创建这个lambda表达式的方法的this参数。
 

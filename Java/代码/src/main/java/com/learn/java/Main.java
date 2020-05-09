@@ -1,5 +1,8 @@
 package com.learn.java;
 
+
+import java.util.Arrays;
+
 /**
  * @author xzy
  * @date 2020-03-25 18:56
@@ -8,34 +11,8 @@ package com.learn.java;
 
 public class Main {
     public static void main(String[] args) {
-    }
-}
-
-class UserIp {
-    private String userId;
-    private String ipAddress;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getIpAddress() {
-        return ipAddress;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public UserIp(String userId, String ipAddress) {
-        this.userId = userId;
-        this.ipAddress = ipAddress;
-    }
-
-    public UserIp() {
+        Integer[] integers = new Integer[]{1, 2, 3, 4, 5, 6};
+        Integer[] integers1 = Arrays.stream(integers).toArray(length -> new Integer[length]);
+        Integer[] integers2 = Arrays.stream(integers).toArray(Integer[]::new);
     }
 }

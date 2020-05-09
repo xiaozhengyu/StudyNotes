@@ -13,7 +13,7 @@ serialVersionUID相当于<font color = #00BFFF>类的“指纹”</font>。seria
 
 > SHA是一种可以为较大的信息块提供“指纹”的高效算法，无论数据库尺寸有多大，生成的“指纹”总之20个字节的数据包。它是通过在数据上执行一个灵巧的位操作序列而创建的，这个序列在本质上可以<font color = orange>保证无论这些数据以何种方式发生改变，其指纹100%会跟着发生改变。</font>序列化机制只使用了SHA码的<font color = #00BFFF>前8个字节</font>作为类的“指纹”，即便如此，当类的数据域或方法发生变化时，其“指纹”跟着发生改变的可能性还是非常大。
 
-在反序列化一个对象时，会拿保存的类指纹与对象所属类当前的指纹进行比对，如果它们不匹配，说明这个类的定义在该对象被序列化以后发生过改变，因此会产生一个异常。
+在反序列化一个对象时，会拿保存的类指纹与类当前的指纹进行比对，如果它们不匹配，说明这个类的定义在该对象被序列化以后发生过改变，因此会产生一个异常。
 
 ---
 
@@ -26,21 +26,9 @@ serialVersionUID相当于<font color = #00BFFF>类的“指纹”</font>。seria
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee implements Serializable {
-    /**
-     * 姓名
-     */
     private String name;
-    /**
-     * 年龄
-     */
     private Integer age;
-    /**
-     * 性别
-     */
     private char sex;
-    /**
-     * 工资
-     */
     private Double salary;
 }
 ```
@@ -52,13 +40,9 @@ public static void main(String[] args) throws Exception {
     ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("employee.dat"));
     Employee employee = new Employee("xzy", 22, 'm', 100000.0);
     outputStream.writeObject(employee);
-    Employee employee1 = read();
-    System.out.println(employee1);
-}
-
-public static Employee read() throws Exception {
+    
     ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employee.dat"));
-    return (Employee) inputStream.readObject();
+    Employee employee1 = (Employee) inputStream.readObject();
 }
 ```
 
@@ -68,7 +52,7 @@ public static Employee read() throws Exception {
 Employee(name=xzy, age=22, sex=m, salary=100000.0)
 ```
 
-若先执行一下代码将对象持久化：
+若先将对象存储：
 
 ```java
 ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("employee.dat"));
@@ -82,7 +66,7 @@ outputStream.writeObject(employee);
 private Double salary_;//salary → lalary_
 ```
 
-然后尝试执行以下代码反序列化对象：
+最后尝试反序列化对象：
 
 ```java
 ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("employee.dat"));
@@ -90,13 +74,13 @@ Employee employee1 =  (Employee) inputStream.readObject();
 System.out.println(employee1);
 ```
 
-上述代码在执行过程中抛出了异常：
+上述代码在执行过程中抛出异常，异常信息如下所示：
 
 ```
 Exception in thread "main" java.io.InvalidClassException: com.learn.java.extend.Employee; local class incompatible: stream classdesc serialVersionUID = -7427550135122105667, local class serialVersionUID = 5815872246558374312
 ```
 
-从异常信息可以看到，对象序列化时，Employee类的指纹为-7427550135122105667，反序列化时，Employee类由于经过修改，指纹已经变为5815872246558374312，二者不匹配，因此抛出异常。
+从异常信息可以看到，对象序列化的时候，Employee类的指纹为-7427550135122105667，反序列化时，Employee类的指纹已经变为了5815872246558374312，二者不匹配，因此抛出异常。
 
 ---
 
@@ -112,27 +96,15 @@ Exception in thread "main" java.io.InvalidClassException: com.learn.java.extend.
 @AllArgsConstructor
 public class Employee implements Serializable {
     public static final long serialVersionUID = -7427550135122105667L;
-
-    /**
-     * 姓名
-     */
+    
     private String name;
-    /**
-     * 年龄
-     */
     private Integer age;
-    /**
-     * 性别
-     */
     private char sex;
-    /**
-     * 工资
-     */
     private Double salary_;//salary → lalary_
 }
 ```
 
-可以看到，Employee类中添加了一个静态成员变量，如果你观察的再仔细点还能发现，该变量保存的值是上文异常信息中，早期Employee类的“指纹”。先运行一下代码，看看异常解决没有：
+可以看到，Employee类中添加了一个名为serialVersionUID的静态成员变量。如果你观察的再仔细一点还能发现，该变量保存的值就是上文异常信息中，对象序列化时Employee类的“指纹”。先运行一下代码，看看异常解决没有：
 
 控制台输出信息：
 
