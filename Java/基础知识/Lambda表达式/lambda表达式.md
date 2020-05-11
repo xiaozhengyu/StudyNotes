@@ -112,9 +112,9 @@ public static void main(String[] args) {
 需要注意的几点：
   >1. 如果没有参数，需要<font color = orange>保留空括号</font>。
       ()->{...}
-      
+
   2. 如果可以推导出参数类型，可以忽略其类型。
-      
+     
       ```java
       Comparator<String> comparator = (s1,s2)->{s1.length()-s2.length();}
       ```
@@ -130,3 +130,6 @@ public static void main(String[] args) {
   
   7. 在一个lambda表达之中使用<font color = #00BFFF>this关键字</font>时，是指创建这个lambda表达式的方法的this参数。
 
+---
+
+《Java核心技术》学习笔记
