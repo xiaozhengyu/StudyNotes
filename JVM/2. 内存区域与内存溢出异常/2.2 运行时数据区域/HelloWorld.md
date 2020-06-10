@@ -1,6 +1,7 @@
 1. HelloWorld.java
 
 ```java
+package com.xiao.virtual;
 public class HelloWorld{
 	public static void main(String[] args){
 		int i = 10;
@@ -26,35 +27,37 @@ cafe babe 0000 0034 001e 0a00 0600 1009
 7263 6546 696c 6501 000f 4865 6c6c 6f57
 6f72 6c64 2e6a 6176 610c 0007 0008 0700
 180c 0019 001a 0100 0c48 656c 6c6f 2057
-6f72 6c64 2107 001b 0c00 1c00 1d01 000a
-4865 6c6c 6f57 6f72 6c64 0100 106a 6176
-612f 6c61 6e67 2f4f 626a 6563 7401 0010
-6a61 7661 2f6c 616e 672f 5379 7374 656d
-0100 036f 7574 0100 154c 6a61 7661 2f69
-6f2f 5072 696e 7453 7472 6561 6d3b 0100
-136a 6176 612f 696f 2f50 7269 6e74 5374
-7265 616d 0100 0770 7269 6e74 6c6e 0100
-1528 4c6a 6176 612f 6c61 6e67 2f53 7472
-696e 673b 2956 0021 0005 0006 0000 0000
-0002 0001 0007 0008 0001 0009 0000 001d
-0001 0001 0000 0005 2ab7 0001 b100 0000
-0100 0a00 0000 0600 0100 0000 0100 0900
-0b00 0c00 0100 0900 0000 4b00 0200 0200
-0000 1610 0a3c 1b9e 0011 b200 0212 03b6
-0004 8401 ffa7 fff1 b100 0000 0200 0a00
-0000 1600 0500 0000 0300 0300 0400 0700
-0500 0f00 0600 1500 0800 0d00 0000 0700
-02fc 0003 0111 0001 000e 0000 0002 000f
+6f72 6c64 2107 001b 0c00 1c00 1d01 001b
+636f 6d2f 7869 616f 2f76 6972 7475 616c
+2f48 656c 6c6f 576f 726c 6401 0010 6a61
+7661 2f6c 616e 672f 4f62 6a65 6374 0100
+106a 6176 612f 6c61 6e67 2f53 7973 7465
+6d01 0003 6f75 7401 0015 4c6a 6176 612f
+696f 2f50 7269 6e74 5374 7265 616d 3b01
+0013 6a61 7661 2f69 6f2f 5072 696e 7453
+7472 6561 6d01 0007 7072 696e 746c 6e01
+0015 284c 6a61 7661 2f6c 616e 672f 5374
+7269 6e67 3b29 5600 2100 0500 0600 0000
+0000 0200 0100 0700 0800 0100 0900 0000
+1d00 0100 0100 0000 052a b700 01b1 0000
+0001 000a 0000 0006 0001 0000 0002 0009
+000b 000c 0001 0009 0000 004b 0002 0002
+0000 0016 100a 3c1b 9e00 11b2 0002 1203
+b600 0484 01ff a7ff f1b1 0000 0002 000a
+0000 0016 0005 0000 0004 0003 0005 0007
+0006 000f 0007 0015 0009 000d 0000 0007
+0002 fc00 0301 1100 0100 0e00 0000 0200
+0f
 ```
 
 3. javap -v HelloWorld.class
 
 ```java
 Classfile /E:/学习笔记/StudyNotes/JVM/2. 内存区域与内存溢出异常/2.2 运行时数据区域/HelloWorld.class
-  Last modified 2020-6-4; size 480 bytes
-  MD5 checksum 4ad6b3b78e03769f6695089a6089f5a2
+  Last modified 2020-6-9; size 497 bytes
+  MD5 checksum d2489e1a6356c4f9703577020395c58d
   Compiled from "HelloWorld.java"
-public class HelloWorld
+public class com.xiao.virtual.HelloWorld
   minor version: 0
   major version: 52
   flags: ACC_PUBLIC, ACC_SUPER
@@ -63,7 +66,7 @@ Constant pool:
    #2 = Fieldref           #17.#18        // java/lang/System.out:Ljava/io/PrintStream;
    #3 = String             #19            // Hello World!
    #4 = Methodref          #20.#21        // java/io/PrintStream.println:(Ljava/lang/String;)V
-   #5 = Class              #22            // HelloWorld
+   #5 = Class              #22            // com/xiao/virtual/HelloWorld
    #6 = Class              #23            // java/lang/Object
    #7 = Utf8               <init>
    #8 = Utf8               ()V
@@ -80,7 +83,7 @@ Constant pool:
   #19 = Utf8               Hello World!
   #20 = Class              #27            // java/io/PrintStream
   #21 = NameAndType        #28:#29        // println:(Ljava/lang/String;)V
-  #22 = Utf8               HelloWorld
+  #22 = Utf8               com/xiao/virtual/HelloWorld
   #23 = Utf8               java/lang/Object
   #24 = Utf8               java/lang/System
   #25 = Utf8               out
@@ -89,7 +92,7 @@ Constant pool:
   #28 = Utf8               println
   #29 = Utf8               (Ljava/lang/String;)V
 {
-  public HelloWorld();
+  public com.xiao.virtual.HelloWorld();
     descriptor: ()V
     flags: ACC_PUBLIC
     Code:
@@ -98,7 +101,7 @@ Constant pool:
          1: invokespecial #1                  // Method java/lang/Object."<init>":()V
          4: return
       LineNumberTable:
-        line 1: 0
+        line 2: 0
 
   public static void main(java.lang.String[]);
     descriptor: ([Ljava/lang/String;)V
@@ -116,11 +119,11 @@ Constant pool:
         18: goto          3
         21: return
       LineNumberTable:
-        line 3: 0
-        line 4: 3
-        line 5: 7
-        line 6: 15
-        line 8: 21
+        line 4: 0
+        line 5: 3
+        line 6: 7
+        line 7: 15
+        line 9: 21
       StackMapTable: number_of_entries = 2
         frame_type = 252 /* append */
           offset_delta = 3
