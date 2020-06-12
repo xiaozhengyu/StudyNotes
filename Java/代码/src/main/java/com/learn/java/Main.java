@@ -1,6 +1,7 @@
 package com.learn.java;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -11,8 +12,8 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Integer[] integers = new Integer[]{1, 2, 3, 4, 5, 6};
-        Integer[] integers1 = Arrays.stream(integers).toArray(length -> new Integer[length]);
-        Integer[] integers2 = Arrays.stream(integers).toArray(Integer[]::new);
+        Integer integer1 = 1;
+        Integer integer2 = new Integer(1);
+        System.out.println(integer1 == integer2);
     }
 }
