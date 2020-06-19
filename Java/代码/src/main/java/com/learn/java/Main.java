@@ -1,8 +1,7 @@
 package com.learn.java;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.learn.java.extend.SubClass;
+import com.learn.java.extend.SuperClass;
 
 /**
  * @author xzy
@@ -12,8 +11,11 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Integer integer1 = 1;
-        Integer integer2 = new Integer(1);
-        System.out.println(integer1 == integer2);
+        //1.
+//        System.out.println(SubClass.value);
+        //2.
+//        SuperClass[] superClasses = new SuperClass[3];
+        //3.
+        System.out.println(SuperClass.HELLO_WORLD);
     }
 }
