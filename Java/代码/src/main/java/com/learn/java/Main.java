@@ -11,11 +11,8 @@ import com.learn.java.extend.SuperClass;
 
 public class Main {
     public static void main(String[] args) {
-        //1.
-//        System.out.println(SubClass.value);
-        //2.
-//        SuperClass[] superClasses = new SuperClass[3];
-        //3.
-        System.out.println(SuperClass.HELLO_WORLD);
+        SuperClass subClass = new SubClass();
+        subClass.selfIntroduction();
+        subClass.sayHello();
     }
 }

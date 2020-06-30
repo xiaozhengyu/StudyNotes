@@ -6,9 +6,11 @@ package com.learn.java.extend;
  * 说明：
  */
 public class SuperClass {
-    static {
-        System.out.println("SuperClass init!");
+    public void selfIntroduction() {
+        System.out.println("I am SuperClass.");
     }
-    public static int value = 123;
-    public static final String HELLO_WORLD = "hello world!";
+
+    public static void sayHello() {
+        System.out.println("SuperClass: Hello!");
+    }
 }
