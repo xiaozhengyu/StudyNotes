@@ -1,5 +1,9 @@
 package com.learn.java;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
 /**
  * @author xzy
  * @date 2020-03-25 18:56
@@ -7,37 +11,36 @@ package com.learn.java;
  */
 
 public class Main {
-    public static class Human {
+    interface Hello {
+        void sayHello();
     }
 
-    public static class Man extends Human {
+    static class MyHello implements Hello {
+        @Override
+        public void sayHello() {
+            System.out.println("hello world!");
+        }
     }
 
-    public static class Woman extends Human {
-    }
+    static class DynamicProxy implements InvocationHandler {
 
-    public static void sayHello(Human human) {
-        System.out.println("human");
-    }
+        Object originalObj;
 
-    public static void sayHello(Man man) {
-        System.out.println("man");
-    }
+        Object bind(Object originalObj) { 
+            this.originalObj = originalObj;
+            return Proxy.newProxyInstance(originalObj.getClass().getClassLoader(),
+                    originalObj.getClass().getInterfaces(), this);
+        }
 
-    public static void sayHello(Woman woman) {
-        System.out.println("woman");
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            System.out.println("Welcome");
+            return method.invoke(originalObj, args);
+        }
     }
 
     public static void main(String[] args) {
-        Human human;
-
-        human = new Human();
-        Main.sayHello(human);
-
-        human = new Man();
-        Main.sayHello((Man) human);
-
-        human = new Woman();
-        Main.sayHello((Woman) human);
+        Hello hello = (Hello) new DynamicProxy().bind(new MyHello());
+        hello.sayHello();
     }
 }

@@ -51,6 +51,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--StringEscapeUtils类可以对html js xml  sql 等代码进行转义来防止SQL注入及XSS注入-->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
     </dependencies>
 
     <build>
