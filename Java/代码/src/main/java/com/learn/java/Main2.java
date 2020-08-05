@@ -1,7 +1,7 @@
 package com.learn.java;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author xzy
@@ -9,9 +9,12 @@ import java.util.stream.Stream;
  */
 public class Main2 {
     public static void main(String[] args) {
-        String[] strings = new String[]{"sd8f09", "fas9d0f", "fas0d", "sad9f0-a9sd0-"};
-        Stream<String> longestFirst = Arrays
-                .stream(strings)
-                .sorted((s1, s2) -> s1.length() > s2.length() ? 1 : 0);
+        List<String> stringList = new ArrayList<>(4);
+        stringList.add("唐朝");
+        stringList.add("宋朝");
+        stringList.add("元朝");
+        stringList.add("明朝");
+        String string = stringList.toString();
+        System.out.println(string);
     }
 }
