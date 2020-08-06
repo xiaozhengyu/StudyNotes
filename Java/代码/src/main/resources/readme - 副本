@@ -1,0 +1,83 @@
+Compiled from "Main2.java"
+public class com.learn.java.Main2 {
+  public com.learn.java.Main2();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: new           #3                  // class java/lang/StringBuilder
+       6: dup
+       7: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+      10: ldc           #5                  // String 方法返值为：
+      12: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: invokestatic  #7                  // Method test:()I
+      18: invokevirtual #8                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      21: invokevirtual #9                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      24: invokevirtual #10                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      27: return
+
+  public static int test();
+    Code:
+       0: iconst_1                                                                                                                                将1压入操作数栈
+       1: istore_0                                                                                                                                将1存储到number
+       2: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       5: new           #3                  // class java/lang/StringBuilder
+       8: dup
+       9: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+      12: ldc           #11                 // String number被赋值为：
+      14: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      17: iload_0
+      18: invokevirtual #8                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      21: invokevirtual #9                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      24: invokevirtual #10                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V                                           System.out.println("number被赋值为：1")
+      27: iconst_2                                                                                                                                将2压入操作数栈
+      28: istore_0                                                                                                                                将2存储到number
+      29: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+      32: new           #3                  // class java/lang/StringBuilder
+      35: dup
+      36: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+      39: ldc           #11                 // String number被赋值为：
+      41: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      44: iload_0
+      45: invokevirtual #8                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      48: invokevirtual #9                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      51: invokevirtual #10                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V                                           System.out.println("number被赋值为：2")
+      54: iload_0                                                                                                                                 将number的值（2）压入操作数栈
+      55: istore_1                                                                                                                                将number的值（2）存储到temp
+      56: iconst_3                                                                                                                                将3压入操作数栈
+      57: istore_0                                                                                                                                将3存储到number
+      58: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+      61: new           #3                  // class java/lang/StringBuilder
+      64: dup
+      65: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+      68: ldc           #11                 // String number被赋值为：
+      70: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      73: iload_0
+      74: invokevirtual #8                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      77: invokevirtual #9                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      80: invokevirtual #10                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V                                           System.out.println("number被赋值为：3")
+      83: iload_0                                                                                                                                 将number的值（3）压入操作数栈
+      84: ireturn                                                                                                                                 返回操作数栈栈顶的值（3）
+      85: astore_2
+      86: iconst_3
+      87: istore_0
+      88: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+      91: new           #3                  // class java/lang/StringBuilder
+      94: dup
+      95: invokespecial #4                  // Method java/lang/StringBuilder."<init>":()V
+      98: ldc           #11                 // String number被赋值为：
+     100: invokevirtual #6                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     103: iload_0
+     104: invokevirtual #8                  // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     107: invokevirtual #9                  // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     110: invokevirtual #10                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+     113: iload_0
+     114: ireturn
+    Exception table:
+       from    to  target type
+          27    56    85   any
+}
