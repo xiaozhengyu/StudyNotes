@@ -86,3 +86,10 @@ CFR 0.149
 
 Please specify '--help optionname' for specifics, eg
    --help pullcodecase
+
+**使用实例**
+
+```
+java -jar cfr-0.149.jar Main.class --stringbuilder false
+```
+

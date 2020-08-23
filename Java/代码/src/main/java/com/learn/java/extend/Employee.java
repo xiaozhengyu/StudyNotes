@@ -16,6 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Employee implements Serializable {
     private static final long serialVersionUID = -7427550135122105667L;
+    private String id;
     private String name;
     private Integer age;
     private char sex;
