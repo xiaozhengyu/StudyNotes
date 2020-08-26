@@ -2,11 +2,11 @@
 
 ---
 
-## 1. HTTP（Hyper Text Transfer Protocol）
+## 1. HTTP
 
 ### 概述
 
-**HTTP基于B/S模式且面向连接**。典型的HTTP事务处理过程如下：
+**HTTP（Hyper Text Transfer Protocol）基于B/S模式且面向连接**。典型的HTTP事务处理过程如下：
 
  ```sequence
  participant 客户端
@@ -20,17 +20,15 @@
 
 HTTP是一种**无状态协议**，即服务器<u>不保留与客户端交易时的任何状态</u>，这种设计大大减轻了服务器的记忆负担，有利于服务器保持较快的响应速度。
 
-### 缺点
-
 HTTP协议虽然使用广泛，但是存在安全缺陷——数据采用明文传输、缺乏消息完整性检验，而这两点恰好是网络支付、网络交易等应用场景需要格外关注的。
 
 > HTTP协议在传输客户端请求和服务端响应时，唯一的数据完整性校验依据就是报文头部包含的本次传输数据的长度，对于数据内容是否被篡改不做确认。
 
 
 
-## 2. HTTPS（Hyper Text Transfer Protocol over Secure Scocket Layer）
+## 2. HTTPS
 
-HTTPS协议是以HTTP为基础进行改良的可进行加密传输、身份认证的网络协议。
+HTTPS（Hyper Text Transfer Protocol over Secure Scocket Layer）协议是以HTTP为基础进行改良的可进行加密传输、身份认证的网络协议。
 
 HTTPS 主要由两部分组成：HTTP + SSL / TLS，也就是在 HTTP 上又加了一层处理加密信息的模块。服务端和客户端的信息传输都会通过 TLS 进行加密，所以传输的数据都是加密后的数据。
 

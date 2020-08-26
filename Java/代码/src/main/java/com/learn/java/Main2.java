@@ -1,11 +1,7 @@
 package com.learn.java;
 
-import com.learn.java.extend.Employee;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * @author xzy
@@ -13,14 +9,16 @@ import java.util.stream.Collectors;
  */
 public class Main2 {
     public static void main(String[] args) {
-        List<Employee> employeeList = new ArrayList<>(3);
-        employeeList.add(new Employee("1001", "张三", 21, 'm', 5000.0));
-        employeeList.add(new Employee("1002", "李四", 22, 'm', 5000.0));
-        employeeList.add(new Employee("1003", "王五", 23, 'm', 5000.0));
 
-        Map<String, Employee> id2EmployeeMap = employeeList
-                .stream()
-                .collect(Collectors.toMap(Employee::getId, e -> e));
+        Date today1 = new Date();
+        today1.setHours(0);
+        today1.setMinutes(0);
+        today1.setSeconds(0);
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        Date today2 = calendar.getTime();
     }
 }

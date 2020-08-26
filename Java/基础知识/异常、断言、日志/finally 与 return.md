@@ -5,9 +5,9 @@
 ## **代码1**
 
 ```java
-public class Main2 {
+public class Main {
     public static void main(String[] args) {
-        System.out.println("方法返值为：" + Main2.test());
+        System.out.println("方法返值为：" + Main.test());
     }
 
     public static int test() {
