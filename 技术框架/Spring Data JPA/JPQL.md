@@ -376,9 +376,15 @@ WHERE
     auth.firstName = 'John'
 ```
 
-In the `FROM` clause declaration `mag.articles` `art`, the identification variable `art` evaluates to any `Article` value directly reachable from `Magazine`. The association-field `articles` is a collection of instances of the abstract schema type `Article` and the identification variable `art` refers to an element of this collection. The type of `auth` is the abstract schema type of `Author`. An identification variable ranges over the abstract schema type of an entity. An identification variable designates an instance of an entity abstract schema type or an element of a collection of entity abstract schema type instances. Identification variables are existentially quantified in a query. An identification variable always designates a reference to a single value. It is declared in one of three ways: in a range variable declaration, in a join clause, or in a collection member declaration. The identification variable declarations are evaluated from left to right in the `FROM` clause, and an identification variable declaration can use the result of a preceding identification variable declaration of the query string.
+In the `FROM` clause declaration `mag.articles` `art`, the identification variable `art` evaluates to any `Article` value directly reachable from `Magazine`. The association-field `articles` is a collection of instances of the abstract schema type `Article` and the identification variable `art` refers to an element of this collection. The type of `auth` is the abstract schema type of `Author`. <u>An identification variable ranges over the abstract schema type of an entity. An identification variable designates an instance of an entity abstract schema type or an element of a collection of entity abstract schema type instances.Identification variables are existentially quantified in a query. An identification variable always designates a reference to a **single value**.</u>It is declared in one of three ways: **in a range variable declaration**, **in a join clause**, or **in a collection member declaration**. The identification variable declarations are evaluated from left to right in the `FROM` clause, and an identification variable declaration can use the result of a preceding identification variable declaration of the query string.
 
-译：在`from`子句的标识变量声明语句`mag.articles art`中，标识变量`art`代表
+译：标识变量的范围涵盖实体的抽象类型。标识变量指向一个抽象类型的实例或抽象类型实例集合中的一个元素。标识变量始终代表指向单个值（single value）的引用。声明标识变量可以通过以下三种方式：
+
+1. 在范围变量声明中（in a range variable declaration）
+2. 在join子句中（in a join clause）
+3. 在集合成员声明中（in a collection member declaration）
+
+标识变量声明在from子句中从左到右求值，并且在声明当前标识变量时，可以使用当前查询语句之前标识变量的结果。
 
 ```mermaid
 graph LR
@@ -394,3 +400,42 @@ graph LR
    Author --1--- r3 --n--- Article
    
 ```
+
+#### 4.1.3 范围声明
+
+（Range Declarations）
+
+The syntax for declaring an identification variable as a range variable is similar to that of SQL; optionally, it uses the AS keyword.
+
+```sql
+range_variable_declaration ::= abstract_scheme_name [AS] identification_variable
+```
+
+译：JPQL 中进行查询范围声明的语法与SQL基本相同，可选择性使用`AS`关键字。
+
+Range variable declarations allow the developer to designate a "root" for objects which may not be reachable by navigation. In order to select values by comparing more than one instance of an entity abstract schema type, more than one identification variable ranging over the abstract schema type is needed in the `FROM` clause.
+
+The following query returns magazines whose prices are greater than the price of magazines published by "Adventure" publishers. <u>This example illustrates the use of two different identification variables in the `FROM` clause, both of the abstract schema type `Magazine`.</u> The `SELECT` clause of this query determines that it is the magazines with prices greater than those of "Adventure" publisher's that are returned.
+
+```sql
+SELECT 
+	DISTINCT mag1 
+FROM 
+	Magazine mag1,
+    Magazine mag2
+WHERE 
+	mag1.price > mag2.price AND 
+	mag2.publisher.name = 'Adventure'
+```
+
+#### 4.1.4 路径表达式
+
+（Path Expressions）
+
+#### 4.1.5 Joins
+
+##### 4.1.5.1 Inner Joins（Relationship Joins）
+
+##### 4.1.5.2 Outer Joins
+
+##### 4.1.5.3 Fatch Joins
