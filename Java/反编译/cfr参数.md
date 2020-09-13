@@ -1,5 +1,7 @@
 # cfr参数
 
+## 1. 使用
+
 输入下列语句可以查看cfr支持的所有参数：
 
 ```
@@ -18,10 +20,12 @@ CFR 0.149
    --collectioniter                 (boolean)  default: true if class file from version 49.0 (Java 5) or greater
    --commentmonitors                (boolean)  default: false
    --comments                       (boolean)  default: true
+
    --decodeenumswitch               (boolean)  default: true if class file from version 49.0 (Java 5) or greater
    --decodefinally                  (boolean)  default: true
    --decodelambdas                  (boolean)  default: true if class file from version 52.0 (Java 8) or greater
    --decodestringswitch             (boolean)  default: true if class file from version 51.0 (Java 7) or greater
+
    --dumpclasspath                  (boolean)  default: false
    --eclipse                        (boolean)  default: true
    --elidescala                     (boolean)  default: false
@@ -92,4 +96,9 @@ Please specify '--help optionname' for specifics, eg
 ```
 java -jar cfr-0.149.jar Main.class --stringbuilder false
 ```
+
+## 2. 其他
+
+1. Javadoc：http://www.benf.org/other/cfr/api/javadoc/org/benf/cfr/reader/api/package-summary.html
+2. 官方使用实例：https://github.com/leibnitz27/cfr_client
 
