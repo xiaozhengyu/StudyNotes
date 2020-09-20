@@ -1,7 +1,7 @@
 package com.learn.java;
 
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author xzy
@@ -9,16 +9,42 @@ import java.util.Date;
  */
 public class Main2 {
     public static void main(String[] args) {
+        List<Map<String, String>> studentCourseInfoList = new ArrayList<>(10);
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            Map<String, String> studentCourseInfo = new HashMap<>(2);
+            studentCourseInfo.put("studentNo", random.nextInt(4) + "");
+            studentCourseInfo.put("courseNo", random.nextInt(10) + "");
+            studentCourseInfoList.add(studentCourseInfo);
+        }
 
-        Date today1 = new Date();
-        today1.setHours(0);
-        today1.setMinutes(0);
-        today1.setSeconds(0);
+        /*
+         * [
+         *   {"studentNo":"111","courseNo":"aaa"},
+         *   {"studentNo":"111","courseNo":"bbb"},
+         *   {"studentNo":"222","courseNo":"ccc"},
+         *   {"studentNo":"222","courseNo":"ddd"},......
+         * ]
+         * convert to:
+         * {
+         *     "111":["aaa","bbb"],
+         *     "222":["ccc","ddd"],......
+         * }
+         */
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        Date today2 = calendar.getTime();
+        Map<String, String> student2CourseSetMap = studentCourseInfoList
+                .stream()
+                .collect(
+                        Collectors.groupingBy(
+                                // 数据分组
+                                sc -> sc.get("studentNo"),
+                                // 数据转换
+                                Collectors.mapping(
+                                        sc -> sc.get("courseNo"),
+                                        Collectors.joining(",")
+                                )
+                        )
+                );
+        System.out.println("");
     }
 }
