@@ -6,7 +6,7 @@
 
 ### 1.1 机器语言
 
-语言是沟通的工具，人类有人类的语言，计算机也有计算机的语言。计算机的语言被称作机器语言，机器语言由机器指令组成，机器指令是由0和1构成的数字串。由于机器语言与我们习惯使用的语言差异较大，因而使用机器语言编写程序十分困难。
+语言是沟通的工具，人类有人类的语言，计算机也有计算机的语言。计算机的语言被称作机器语言，机器语言由**机器指令**组成，机器指令是由**0和1**构成的数字串。机器指令不易记忆，机器语言的使用难度很高。
 
 ```mermaid
 graph LR
@@ -27,7 +27,7 @@ c++-->c2m-->machine
 python-->p2m-->machine
 ```
 
-由于计算机能够且只能够理解机器语言，因而其他语言编写的程序需要被转换成机器语言才能被计算机执行。
+计算机能够且只能够理解机器语言，其他语言编写的程序需要先转换成机器语言才能被计算机执行。
 
 ```mermaid
 graph LR
@@ -78,26 +78,64 @@ russianQuestion-->russian2chinese-->chineseQuestion
 
     <center>图3 临时翻译</center>
 
-### 1.3 Java与JVM
+### 1.3 平台相关性
+
+Java中的int永远是32位的整数，而在C/C++中，int可能是16位整数、32位整数，也可能是编译器提供商指定的其他大小。Java语言独立于具体的平台。
+
+### 1.4 Java与JVM
+
+Java是平台无关的，但JVM是平台相关的：
+
+```mermaid
+graph LR
+javaProgram(.java)
+javac[javac]
+byteFile(.class)
+windowsJVM[windowsJVM]
+linuxJVM[linuxJVM]
+macJVM[macJVM]
+
+javaProgram-->javac-->byteFile
+byteFile-->windowsJVM
+byteFile-->linuxJVM
+byteFile-->macJVM
+```
+
+## 3. JRE
+
+JRE 全称 Java Runtime Environment，即Java运行时环境。JRE 是运行 Java 程序的充要条件。
+
+### 3.1 JRE与JVM
+
+JVM 是运行 Java 程序的必要条件，但只有JVM还不足以支持 Java 程序的运行。运行 Java 程序除了需要 JVM，还需要类加载器、字节码校验器以及大量的基础类库。JRE 包含了运行 Java 程序所必须的所有环境支持。
+
+```mermaid
+graph LR
+JRE --> JVM
+JRE --> 类加载器
+JRE --> 字节码校验器
+JRE --> 基础类库
+```
 
 
 
-## 2.JRE
+## 4.JDK
 
+JDK 全称 JavaSE Development Kit，即Java标准版开发包。JDK 是一套用于开发Java程序的开发工具包，它提供了编译、运行 Java 程序所需要的各种工具和资源，包括 Java 编译器、JRE ，以及常用的Java类库。
 
+## 5.SDK
 
+SDK 全称 Software Development Kit，即软件开发工具包。SDK包含了JDK。
 
+## 6.关系
 
-## 3.JDK
+```mermaid
+graph LR
+other1[其他]
+other2[其他]
 
-
-
-## 4.SDK
-
-
-
-## 5.关系
-
-
-
-## 6.下载JDK
+SDK --> JDK
+SDK --> other1
+JDK --> other2
+JDK --> JRE
+```
