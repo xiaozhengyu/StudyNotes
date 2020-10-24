@@ -1,7 +1,6 @@
 package com.learn.java;
 
 import com.learn.ClassA;
-import com.learn.ClassB;
 
 /**
  * @author xzy
@@ -11,10 +10,5 @@ import com.learn.ClassB;
 public class Main {
 
     public static void main(String[] args) {
-        ClassA classA = new ClassA();
-        ClassB classB = new ClassB();
-
-        classA.setClassB(classB);
-        classB.setClassA(classA);
     }
 }

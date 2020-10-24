@@ -1,14 +1,15 @@
 package com.learn;
 
+import java.util.*;
+import java.util.stream.Stream;
+
 /**
  * @author xzy
  * @date 2020/10/20 22:09
  * 说明：
  */
 public class ClassA {
-    private ClassB classB;
-
-    public void setClassB(ClassB classB) {
-        this.classB = classB;
+    public static void main(String[] args) {
+        LinkedList
     }
 }

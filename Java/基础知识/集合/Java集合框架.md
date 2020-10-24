@@ -2,6 +2,8 @@
 
 ---
 
+![image-20201024141228708](markdown/Java集合框架.assets/image-20201024141228708.png)
+
 ## 1.Collection接口
 
 Java类库中，集合类的基本接口是Collection接口，Collection接口拓展自Iterable接口。
