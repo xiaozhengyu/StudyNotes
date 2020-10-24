@@ -92,7 +92,7 @@ public class Main2 {
 }
 ```
 
-从反编译的结果看，<font color = yellow>对char类型进行比较的时候，实际比较的是字符对应的ASCⅡ码</font>，编译器把switch中char类型的变量转换成int类型的变量。
+从反编译的结果看，<font color = red>对char类型进行比较的时候，实际比较的是字符对应的ASCⅡ码</font>，编译器把switch中char类型的变量转换成int类型的变量。
 
 ## String
 
@@ -150,7 +150,7 @@ public class Main2 {
 }
 ```
 
-从反编译的结果看，<font color = yellow>switch借助hashCode()和equals()实现了对String的支持</font>——先使用hashCode进行初步判断，然后使用equal()进行二次校验（由于哈希冲突的存在，这个二次校验是必要的）。
+从反编译的结果看，<font color = red>switch借助hashCode()和equals()实现了对String的支持</font>——先使用hashCode进行初步判断，然后使用equal()进行二次校验（由于哈希冲突的存在，这个二次校验是必要的）。
 
 ## enum
 
@@ -240,11 +240,11 @@ public class Main {
 }
 ```
 
-上面的反编译结果表明，<font color = yellow>switch借助枚举类的序号实现对枚举类的支持</font>。
+上面的反编译结果表明，<font color = red>switch借助枚举类的序号实现对枚举类的支持</font>。
 
 ## 总结
 
-<font color = yellow>其实switch只支持整型，其他数据类型都是转换成整型后才使用的switch。</font>
+<font color = red>其实switch只支持整型，其他数据类型都是转换成整型后才使用的switch。</font>
 
 ---
 
