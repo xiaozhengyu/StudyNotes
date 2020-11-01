@@ -6,15 +6,9 @@ package com.learn.java;
  * 说明：
  */
 public class ClassA {
-    static {
-        System.out.println("ClassA static code block.");
-    }
+    public static String staticValue = "ClassA static value.";
 
-    {
-        System.out.println("ClassA code block.");
-    }
-
-    public ClassA() {
-        System.out.println("ClassA constructor.");
+    public static void staticMethod(){
+        System.out.println("ClassA static method.");
     }
 }

@@ -6,21 +6,18 @@ package com.learn.java;
  * 说明：
  */
 public class ClassB extends ClassA {
-    static {
-        System.out.println("ClassB static code block.");
-    }
 
-    {
-        System.out.println("ClassB code block.");
-    }
+    public static String staticValue = "ClassB static value.";
 
-    public ClassB() {
-        System.out.println("ClassB constructor.");
+    public static void staticMethod(){
+        System.out.println("ClassB static method.");
     }
 
     public static void main(String[] args) {
-        new ClassB();
-        System.out.println("");
-        new ClassB();
+        ClassA.staticMethod();
+        System.out.println(ClassA.staticValue);
+
+        ClassB.staticMethod();
+        System.out.println(ClassB.staticValue);
     }
 }
