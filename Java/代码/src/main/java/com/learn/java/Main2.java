@@ -6,7 +6,16 @@ package com.learn.java;
  */
 public class Main2 {
     public static void main(String[] args) {
-        System.out.println(5>>>2);
-        System.out.println(-5>>>2);
+
+        // 标识循环的标签
+        stop:
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (j == 3) {
+                    continue stop;
+                }
+                System.out.println("i = " + i + ",j = " + j);
+            }
+        }
     }
 }
