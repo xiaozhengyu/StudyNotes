@@ -1,4 +1,4 @@
-# switch
+# switch支持的类型
 
 Java7开始，switch的参数可以是String类型了，这真的是一个很有用的改进，毕竟string还是挺常用的。到目前为止，switch支持的参数类型有：`byte`、`short`、`int`、`char`、`String`、`enum`。switch对各种类型参数的支持到底是怎么实现的呢？
 
@@ -249,3 +249,4 @@ public class Main {
 ---
 
 参考文献：https://hollischuang.github.io/toBeTopJavaer/#/basics/java-basic/switch-string
+
