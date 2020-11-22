@@ -6,12 +6,23 @@ package com.learn.java.extend;
  * 说明：
  */
 public class SubClass extends SuperClass {
-    @Override
-    public void selfIntroduction() {
-        System.out.println("I am SubClass.");
+
+    {
+        className = "SubClass 1";
     }
 
-    public static void sayHello(){
-        System.out.println("SubClass: Hello!");
+    public String className = "SubClass 2";
+
+    {
+        className = "SubClass 3";
+    }
+
+    public SubClass() {
+        className = "SubClass 4";
+    }
+
+    @Override
+    public String getClassName() {
+        return this.className;
     }
 }
