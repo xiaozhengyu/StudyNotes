@@ -1,8 +1,6 @@
 package com.learn.java.innerclass;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author xzy
@@ -10,25 +8,30 @@ import lombok.NoArgsConstructor;
  * 说明：外部类
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class OuterClass {
-    private Object outerClassValue;
+    private String field;
 
-    public InnerClass getInnerClass() {
-        return new InnerClass();
+    public void test(String field) {
+        InnerClass innerClass = new InnerClass();
+        innerClass.setField("内部类属性");
+        innerClass.test(field);
     }
 
-    private class InnerClass {
-        public Object getOuterClassValue() {
-            return outerClassValue;
+    @Data
+    public class InnerClass {
+        private String field;
+
+        public void test(String field) {
+            System.out.println(OuterClass.this.field);
+            System.out.println(this.field);
+            System.out.println(field);
         }
     }
 
     public static void main(String[] args) {
-        OuterClass outerClass = new OuterClass("hello world!");
-        InnerClass innerClass = outerClass.getInnerClass();
-        System.out.println(outerClass.getOuterClassValue());
-        System.out.println(innerClass.getOuterClassValue());
+        OuterClass outerClass = new OuterClass();
+        outerClass.setField("外部类属性");
+        outerClass.test("局部变量");
+
     }
 }
