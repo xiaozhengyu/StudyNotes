@@ -1,6 +1,6 @@
 package com.learn.java;
 
-import com.learn.java.innerclass.OuterClass;
+import com.learn.java.enumerate.SeasonEnum;
 
 /**
  * @author xzy
@@ -9,9 +9,6 @@ import com.learn.java.innerclass.OuterClass;
  */
 public abstract class Main {
     public static void main(String[] args) {
-        OuterClass outerClass = new OuterClass();
-        outerClass.setField("外部类属性");
-        outerClass.test("局部变量");
-
+        SeasonEnum seasonEnum = SeasonEnum.valueOf("SPRING");
     }
 }

@@ -7,7 +7,7 @@ package com.learn.java.enumerate;
  */
 public enum WeekEnum {
     /**
-     * 周
+     * 周一、周二、...、周日
      */
     MONDAY,
     TUESDAY,
@@ -15,5 +15,5 @@ public enum WeekEnum {
     THURSDAY,
     FRIDAY,
     SATURDAY,
-    SUNDAY
+    SUNDAY;
 }
