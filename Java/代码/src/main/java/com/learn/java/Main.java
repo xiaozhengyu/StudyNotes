@@ -1,7 +1,5 @@
 package com.learn.java;
 
-import com.learn.java.enumerate.SeasonEnum;
-
 /**
  * @author xzy
  * @date 2020-03-25 18:56
@@ -9,6 +7,6 @@ import com.learn.java.enumerate.SeasonEnum;
  */
 public abstract class Main {
     public static void main(String[] args) {
-        SeasonEnum seasonEnum = SeasonEnum.valueOf("SPRING");
+
     }
 }
