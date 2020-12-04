@@ -1,0 +1,55 @@
+# UNION 和 UNION ALL
+
+---
+
+## UNION
+
+**说明：**
+
+UNION 操作符用于合并两个或多个 SELECT 语句的结果集。结果集必须具有相同数量、相同顺序、相似数据类型的列。
+
+UNION 操作的结果集的列名等于第一个结果集的列名。
+
+<font color = red>UNION 操作自带去重效果，即结果集中不含相同的数据。如果需要保留相同的数据，应该使用 UNION ALL。</font>
+
+**语法：**
+
+```sql
+SELECT column_name FROM table_name1
+UNION
+SELECT column_name FROM table_name2
+```
+
+**示例：**
+
+```sql
+SELECT student.student_name AS name, student.id FROM student
+UNION
+SELECT teacher.teacher_name as name, teacher.id FROM teacher
+```
+
+董文婷	4028c181719b84cd01719bebef990000
+白居易	4028c181719b84cd01719c2d501d0002
+李白	8a81904e6e640273016ef29adf873b87
+孙中山	8a8190dc7153fd7e0171588b277a0007
+李远明	8a8190dc719fccc50171a1251e560011
+张思	8a8190dc719fccc50171a130917f0012
+孙思邈	8a8190dc719fe2ce0171a15add890000
+安东尼	8a8190dc719fe2ce0171a4855d370001
+松岛枫	8a8190dc719fe2ce0171a4a443d20002
+张思涵	8a8190dc719fe2ce0171a5125d660003
+毕福剑	8a8190dc719fe2ce0171a522e73d0004
+测试	8a8190dc71a9b6270171aa4c69c60011
+黑土	8a8190dc71a9b6760171a9e794300000
+白云	8a8190dc71b460ec0171c00cc5c700cf
+宋丹丹	8a8190dc71b460ec0171c010684200d2
+张无忌	8a8190dc71c569980171c8a581700000
+梁玉华	8a8190dc71c569980171c8a701320001
+张华	8a8190dc71f8375d0171f8ae8691001c
+港龙	8a8190dc720d396001724ef3cce4012d
+吴文俊	8a8190dc720d396001724f9e07f30214
+肖政宇	40284703628f74ff01628f771a690001
+李沁	4028c18171676b060171957423db128
+张三丰	4028c1817180e29f017180e3824a0000
+段子安	4028c1817180e29f017180e3f2390001
+路今夜	4028c18171956b06017195713db00000
