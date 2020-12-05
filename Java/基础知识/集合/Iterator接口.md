@@ -27,9 +27,7 @@ public interface Iterable<T> {
 
 ## 2. Iterator 接口源码分析
 
-在 Java 集合框架中，承装数据的任务有Collection、Map负责，而 Iterator 则主要用于遍历（即迭代访问）集合中的元素。
-
-Iterator 接口隐藏了各种集合实现类的底层细节，向外提供了访问集合中元素的统一编程接口。Iterator 接口中包含有4个方法：
+在 Java 集合框架中，承装数据的任务由 Collection、Map 负责，而 Iterator 主要用于遍历（即迭代访问）集合中的元素。Iterator 接口隐藏了各种集合实现类的底层细节，向外提供了访问集合中元素的统一编程接口。Iterator 接口中包含有4个方法：
 
 ![image-20201203201032118](markdown/Iterator接口.assets/image-20201203201032118.png)
 
@@ -39,7 +37,11 @@ Iterator 接口隐藏了各种集合实现类的底层细节，向外提供了�
 
 （以 AbstractList 类的内部类 Itr 为例）
 
+![image-20201205154039777](markdown/Iterator接口.assets/image-20201205154039777.png)
 
+<center>图3.1 AbstractList 类中实现了 Iterator 接口的内部类</center>
+
+一般来说，负责承装数据的集合类会在类的内部声明一个实现了 Iterator 接口的内部类。
 
 ## 4. 其他
 
