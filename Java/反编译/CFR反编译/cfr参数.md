@@ -17,7 +17,7 @@ CFR 0.149
    --arrayiter                      (boolean)  default: true if class file from version 49.0 (Java 5) or greater
    --caseinsensitivefs              (boolean)  default: true  不区分大小写
    --clobber                        (boolean)
-   --collectioniter                 (boolean)  default: true if class file from version 49.0 (Java 5) or greater
+   <font color = red>--collectioniter</font>                 (boolean)  default: true if class file from version 49.0 (Java 5) or greater
    --commentmonitors                (boolean)  default: false
    --comments                       (boolean)  default: true
 
