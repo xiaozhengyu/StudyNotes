@@ -307,8 +307,8 @@ public interface Map<K, V> {
     // Views
 
     /**
-     * Returns a {@link Set} view of the keys contained in this map.
-     * The set is backed by the map, so changes to the map are
+     * Returns a {@link Set} view of the keys contained in this map.                       笔记：返回当前Map包含的所有key的Set。这个key Set由Map负责进行维护，因此对Map进行的修改
+     * The set is backed by the map, so changes to the map are                                  也将影响这个key Set，反之亦然。
      * reflected in the set, and vice-versa.  If the map is modified
      * while an iteration over the set is in progress (except through
      * the iterator's own <tt>remove</tt> operation), the results of
@@ -324,8 +324,8 @@ public interface Map<K, V> {
     Set<K> keySet();
 
     /**
-     * Returns a {@link Collection} view of the values contained in this map.
-     * The collection is backed by the map, so changes to the map are
+     * Returns a {@link Collection} view of the values contained in this map.             笔记：返回当前Map包含的所有value的Collection。这个value Collection由Map负责进行维护，因此
+     * The collection is backed by the map, so changes to the map are                          任何对Map进行的修改也将影响这个value Collection，反之亦然。
      * reflected in the collection, and vice-versa.  If the map is
      * modified while an iteration over the collection is in progress
      * (except through the iterator's own <tt>remove</tt> operation),
@@ -341,8 +341,8 @@ public interface Map<K, V> {
     Collection<V> values();
 
     /**
-     * Returns a {@link Set} view of the mappings contained in this map.
-     * The set is backed by the map, so changes to the map are
+     * Returns a {@link Set} view of the mappings contained in this map.                  笔记：返回当前Map包含的所有k-v的Set。这个k-v Set由Map负责进行维护，因此任何对Map进行的修改也将
+     * The set is backed by the map, so changes to the map are                                 影响到这个k-v Set，反之亦然。
      * reflected in the set, and vice-versa.  If the map is modified
      * while an iteration over the set is in progress (except through
      * the iterator's own <tt>remove</tt> operation, or through the
