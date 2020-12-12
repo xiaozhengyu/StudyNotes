@@ -7,5 +7,6 @@ package com.learn.java;
  */
 public abstract class Main {
     public static void main(String[] args) {
+
     }
 }
