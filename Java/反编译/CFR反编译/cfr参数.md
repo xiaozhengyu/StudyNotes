@@ -44,7 +44,9 @@ CFR 0.149
    --ignoreexceptionsalways         (boolean)  default: false
    --importfilter                   (string)
    --innerclasses                   (boolean)  default: true
-   --instanceofpattern              (boolean)  default: true if class file from version 58.0 (Java 14) or greater, or experimental in 58.0 (Java 14)
+   --instanceofpattern              (boolean)  default: true if class file from version 58.0 (Java 14) or greater, or 
+
+experimental in 58.0 (Java 14)
    --j14classobj                    (boolean)  default: false if class file from version 49.0 (Java 5) or greater
    --jarfilter                      (string)
    --labelledblocks                 (boolean)  default: true
@@ -57,7 +59,9 @@ CFR 0.149
    --override                       (boolean)  default: true if class file from version 50.0 (Java 6) or greater
    --previewfeatures                (boolean)  default: true
    --pullcodecase                   (boolean)  default: false
-   --recordtypes                    (boolean)  default: true if class file from version 58.0 (Java 14) or greater, or experimental in 58.0 (Java 14)
+   --recordtypes                    (boolean)  default: true if class file from version 58.0 (Java 14) or greater, or 
+
+experimental in 58.0 (Java 14)
    --recover                        (boolean)  default: true
    --recovertypeclash               (boolean)
    --recovertypehints               (boolean)
