@@ -1,7 +1,6 @@
 package com.learn.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author xzy
@@ -10,10 +9,10 @@ import java.util.List;
  */
 public class MyCollection {
     public static void main(String[] args) {
-        Object[] objectArray = new String[]{}; // OK!
-
-        List< ? extends Object> objectList = new ArrayList<Object>(); // OK!
-        List<String> stringList = new ArrayList<String>(); // OK!
-        objectList = stringList; // ERROR!
+        Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("\n");
+        while (scanner.hasNext()) {
+            System.out.println("获取到输入数据：" + scanner.next());
+        }
     }
 }
