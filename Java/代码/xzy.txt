@@ -1,0 +1,23 @@
+package com.learn.java;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+/**
+ * @author xzy
+ * @date 2020-04-06 20:53
+ */
+public class Main2 {
+    public static void main(String[] args) throws IOException {
+        File file = new File("xzy.txt");
+        file.createNewFile();
+
+        FileInputStream fileInputStream = new FileInputStream("xzy.txt");
+        byte[] b = new byte[1024];
+        while ((fileInputStream.read(b)) > 0) {
+            System.out.println(b);
+        }
+
+    }
+}
